@@ -1,0 +1,1430 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" id="root">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Chickenji — The Taste of Happiness</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Space+Mono:wght@400;700&family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="index.css" />
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#home" class="nav-logo">
+    <img src="logo.png" alt="Chickenji Logo" class="logo-svg nav-logo-svg">
+  </a>
+  <ul class="nav-links">
+    <li><a href="#home" id="nav-home">Home</a></li>
+    <li><a href="#about" id="nav-about">About</a></li>
+    <li><a href="#menu" id="nav-menu">Menu</a></li>
+    <li><a href="#contact" id="nav-contact">Contact</a></li>
+  </ul>
+  <div style="display: flex; align-items: center; gap: 0.5rem;">
+    <a href="tel:+963984444151" class="nav-order" id="nav-order">📞 Order Now</a>
+    <button class="lang-toggle" id="langToggle" onclick="toggleLang()">عربي</button>
+    <button class="hbg" id="hbg"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<div class="mob-menu" id="mobMenu">
+  <a href="#home" onclick="closeMob()" id="mob-home">Home</a>
+  <a href="#about" onclick="closeMob()" id="mob-about">About</a>
+  <a href="#menu" onclick="closeMob()" id="mob-menu">Menu</a>
+  <a href="#contact" onclick="closeMob()" id="mob-contact">Contact</a>
+  <a href="tel:+963984444151" style="color:var(--y)">📞 <span class="phone-number">+963 984 444 151</span></a>
+  <button class="lang-toggle" onclick="toggleLang()" style="cursor:auto;width:fit-content;margin:0">🌐 عربي / English</button>
+</div>
+
+<!-- HERO -->
+<section class="hero-bento" id="home">
+  <div class="hero-card-left">
+    <div class="hero-eyebrow" id="hero-eyebrow">Broasted &amp; Chicken Sandwiches</div>
+    <div class="hero-logo-container">
+      <img src="logo.png" alt="Chickenji Logo" class="logo-svg hero-logo-svg">
+    </div>
+    <h1 class="hero-headline">
+      The<br><span class="y">T</span>aste<br>of <span class="y">H</span>appiness
+    </h1>
+    <p class="hero-bio" id="hero-bio">
+      <strong>Chickenji — The Taste of Happiness.</strong><br>Broasted perfection &amp; legendary chicken sandwiches.
+    </p>
+    <div class="hero-btns">
+      <a href="#menu" class="btn-y" id="hero-btn1">🍗 Explore Menu</a>
+      <a href="#contact" class="btn-outline" id="hero-btn2">📍 Find Us</a>
+    </div>
+  </div>
+</section>
+
+<!-- Scroll ticker -->
+<div class="ticker">
+  <div class="ticker-track">
+    <div class="ticker-item">The Taste of Happiness <span class="ticker-dot"></span></div>
+    <div class="ticker-item">Broasted Chicken <span class="ticker-dot"></span></div>
+    <div class="ticker-item">Crispy Sandwiches <span class="ticker-dot"></span></div>
+    <div class="ticker-item">Chickenji Boom <span class="ticker-dot"></span></div>
+    <div class="ticker-item">The Taste of Happiness <span class="ticker-dot"></span></div>
+    <div class="ticker-item">Broasted Chicken <span class="ticker-dot"></span></div>
+    <div class="ticker-item">Crispy Sandwiches <span class="ticker-dot"></span></div>
+    <div class="ticker-item">Chickenji Boom <span class="ticker-dot"></span></div>
+    <div class="ticker-item">The Taste of Happiness <span class="ticker-dot"></span></div>
+    <div class="ticker-item">Broasted Chicken <span class="ticker-dot"></span></div>
+    <div class="ticker-item">Crispy Sandwiches <span class="ticker-dot"></span></div>
+    <div class="ticker-item">Chickenji Boom <span class="ticker-dot"></span></div>
+    <div class="ticker-item">The Taste of Happiness <span class="ticker-dot"></span></div>
+    <div class="ticker-item">Broasted Chicken <span class="ticker-dot"></span></div>
+    <div class="ticker-item">Crispy Sandwiches <span class="ticker-dot"></span></div>
+    <div class="ticker-item">Chickenji Boom <span class="ticker-dot"></span></div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-grid">
+    <!-- Left Column: Store Interior Showcase -->
+    <div class="about-img-wrap reveal">
+      <img src="indoor.jpg" alt="Chickenji Restaurant Interior" class="about-interior">
+      <div class="about-img-badge">
+        <span id="about-badge">100% Fresh</span>
+        <span id="about-badge-sub" style="display:block">Every Single Day</span>
+      </div>
+    </div>
+    
+    <!-- Right Column: Bento Features & Description -->
+    <div>
+      <div class="section-label reveal" id="about-label">Our Vibe</div>
+      <h2 class="section-title reveal" id="about-title">Crispy. Bold. <span class="y">Unmatched.</span></h2>
+      <p id="about-p1" class="reveal d1" style="font-size: 0.92rem; color: var(--muted); margin-bottom: 1.2rem; line-height: 1.7;"></p>
+      <p id="about-p2" class="reveal d1" style="font-size: 0.92rem; color: var(--muted); margin-bottom: 2rem; line-height: 1.7;"></p>
+      
+      <div class="bento-features reveal d2">
+        <div class="bfeat-card">
+          <span class="bfeat-num">01</span>
+          <h3 id="feat1h">🔥 Broasted</h3>
+          <p id="feat1p">Pressure-cooked, golden-crispy outside, juicy inside</p>
+        </div>
+        
+        <div class="bfeat-card">
+          <span class="bfeat-num">02</span>
+          <h3 id="feat2h">🥪 10+ Sandwiches</h3>
+          <p id="feat2p">Crispy, Zinger, Crunchy, Fajita, Mexicano &amp; more</p>
+        </div>
+        
+        <div class="bfeat-card">
+          <span class="bfeat-num">03</span>
+          <h3 id="feat3h">🌿 Fresh Only</h3>
+          <p id="feat3p">Quality toppings made daily</p>
+          <div class="bfeat-badge" id="feat4h">⚡ Fast Service</div>
+          <p id="feat4p" style="display:none"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Slat Wave Divider -->
+<div class="slat-equalizer">
+  <div class="slat-bar"></div>
+  <div class="slat-bar"></div>
+  <div class="slat-bar"></div>
+  <div class="slat-bar"></div>
+  <div class="slat-bar"></div>
+  <div class="slat-bar"></div>
+  <div class="slat-bar"></div>
+  <div class="slat-bar"></div>
+</div>
+
+<!-- MENU CARDS -->
+<section class="menu-section" id="menu">
+  <div class="menu-inner">
+    <div class="menu-header">
+      <div class="section-label reveal" id="menu-label">What We Serve</div>
+      <h2 class="section-title reveal" id="menu-title">Our <span class="y">Menu</span></h2>
+    </div>
+
+    <div class="filter-row reveal">
+      <button class="fpill active" id='filter1' onclick="filter(event,'broasted')">🍗 Broasted</button>
+      <button class="fpill" id='filter2' onclick="filter(event,'sandwiches')">🥪 Sandwiches</button>
+      <button class="fpill" id='filter3' onclick="filter(event,'western')">🍟 Western Meals</button>
+      <button class="fpill" id='filter4' onclick="filter(event,'boom')">💥 Boom</button>
+      <button class="fpill" id='filter5' onclick="filter(event,'sides')">🥗 Sides</button>
+    </div>
+
+    <div class="cards-grid" id="cardsGrid">
+      <!-- Dynamic menu cards are rendered here via JavaScript -->
+    </div>
+  </div>
+</section>
+
+<!-- Slat Wave Divider -->
+<div class="slat-equalizer">
+  <div class="slat-bar"></div>
+  <div class="slat-bar"></div>
+  <div class="slat-bar"></div>
+  <div class="slat-bar"></div>
+  <div class="slat-bar"></div>
+  <div class="slat-bar"></div>
+  <div class="slat-bar"></div>
+  <div class="slat-bar"></div>
+</div>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="max-w" style="max-width:1200px;margin:0 auto">
+    <div class="menu-header">
+      <div class="section-label reveal" id="contact-label">Find Us</div>
+      <h2 class="section-title reveal" id="contact-title">Get In <span class="y">Touch</span></h2>
+    </div>
+    
+    <div class="bento-contact-grid reveal">
+      <!-- Card 1: Call & WA Stack -->
+      <div class="bento-contact-card contact-stack">
+        <a href="tel:+963984444151" class="social-button">
+          <div class="social-btn-info">
+            <span class="social-btn-icon">📞</span>
+            <div class="social-btn-text">
+              <h4 id="contact-phone-h">Phone</h4>
+              <p class="phone-number">+963 984 444 151</p>
+            </div>
+          </div>
+          <span class="social-btn-arrow">→</span>
+        </a>
+        <a href="https://wa.me/963984444151" target="_blank" class="social-button">
+          <div class="social-btn-info">
+            <span class="social-btn-icon">💬</span>
+            <div class="social-btn-text">
+              <h4 id="contact-wa-h">WhatsApp</h4>
+              <p class="phone-number">+963 984 444 151</p>
+            </div>
+          </div>
+          <span class="social-btn-arrow">→</span>
+        </a>
+      </div>
+      
+      <!-- Card 2: Address Details -->
+      <div class="bento-contact-card address-card">
+        <h3 id="contact-loc-h">📍 Location</h3>
+        <p id="contact-loc-p">Dariya — Al-Mudhamiya Road<br>50m before the Cultural Center</p>
+        
+        <div>
+          <h4 class="section-label" style="margin-bottom:0.8rem; justify-content:flex-start;" id="follow-label">Follow Us</h4>
+          <div class="address-card-links">
+            <a href="https://www.instagram.com/chickenji.official?igsh=dGQwYnNxMGR1ajNn&utm_source=qr" target="_blank" class="slink">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+              @chickenji.official
+            </a>
+            <a href="https://www.facebook.com/share/1HbYpFoh54/?mibextid=wwXIfr" target="_blank" class="slink">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+              CHICKENJI
+            </a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Card 3: Map Box -->
+      <div class="map-box">
+        <div class="map-pin-icon">📍</div>
+        <div class="map-box-text">
+          <strong>CHICKENJI</strong>
+          Dariya — Al-Mudhamiya Road<br>
+          50m before the Cultural Center<br><br>
+          <a href="tel:+963984444151" class="phone-number" style="color:var(--y);text-decoration:none;font-family:var(--ff-mono);font-size:0.85rem;letter-spacing:1.5px">+963 984 444 151</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <img src="logo.png" alt="Chickenji Logo" class="logo-svg footer-logo-svg">
+    <div class="footer-mid">
+      <strong>The Taste of Happiness</strong>
+      <span id="footer-tagline">Broasted perfection &amp; legendary chicken sandwiches</span>
+    </div>
+    <div class="footer-right"><span id="footer-rights">© 2026 Chickenji. All rights reserved.</span></div>
+  </div>
+</footer>
+
+<!-- Admin Mode Top Bar -->
+<div class="admin-bar" id="adminBar">
+  ADMIN MODE ACTIVE &nbsp;|&nbsp; 
+  <button class="admin-btn admin-btn-secondary" onclick="resetMenuToDefault()" style="padding: 2px 10px; font-size: 0.65rem; font-family: inherit; cursor: pointer; display: inline-block; vertical-align: middle;">Reset to Defaults</button>
+  <button class="admin-btn admin-btn-secondary" onclick="openChangePasswordModal()" style="padding: 2px 10px; font-size: 0.65rem; font-family: inherit; cursor: pointer; display: inline-block; vertical-align: middle; margin-left: 10px;">Change Passcode</button>
+</div>
+
+<!-- Floating Admin Gear Toggle Button -->
+<button class="admin-toggle-btn" id="adminToggleBtn" onclick="toggleAdminMode()" title="Admin Mode">
+  ⚙️
+</button>
+
+<!-- Admin Passcode Verification Overlay -->
+<div class="admin-overlay" id="adminPasscodeOverlay">
+  <div class="admin-modal" style="max-width: 380px; text-align: center;">
+    <button class="admin-modal-close" onclick="closeAdminPasscode()">&times;</button>
+    <h3>Admin <span class="y">Login</span></h3>
+    <p style="font-size: 0.8rem; color: var(--muted); margin-bottom: 1.5rem; font-family: var(--ff-mono);">Enter passcode to enable editor mode</p>
+    <div class="admin-form-group">
+      <input type="password" id="adminPasscode" placeholder="••••" style="text-align: center; font-size: 1.8rem; letter-spacing: 8px;" maxlength="6" autofocus />
+    </div>
+    <div style="color: var(--r); font-size: 0.75rem; margin-top: -0.5rem; margin-bottom: 1rem; display: none;" id="passcodeError">Invalid passcode!</div>
+    <button class="admin-btn admin-btn-primary" style="width: 100%;" onclick="submitPasscode()">Verify</button>
+    <div style="margin-top: 15px; text-align: center;">
+      <a href="#" onclick="showRecoveryQuestion()" id="forgotPasscodeLink" style="color: var(--y); font-size: 0.65rem; text-decoration: none; font-family: var(--ff-mono); text-transform: uppercase; letter-spacing: 1px;">Forgot Passcode?</a>
+    </div>
+  </div>
+</div>
+
+<!-- Admin Passcode Recovery Overlay -->
+<div class="admin-overlay" id="adminRecoveryOverlay">
+  <div class="admin-modal" style="max-width: 380px; text-align: center;">
+    <button class="admin-modal-close" onclick="closeAdminRecovery()">&times;</button>
+    <h3 id="recoveryTitle">Passcode <span class="y">Recovery</span></h3>
+    <p style="font-size: 0.8rem; color: var(--muted); margin-bottom: 1.5rem; font-family: var(--ff-mono);" id="recoverySub">Answer the security question to reset the passcode to default (1234)</p>
+    
+    <div class="admin-form-group" style="text-align: left; margin-bottom: 1rem;">
+      <label id="recoveryQuestionLabel" style="display: block; font-family: var(--ff-mono); font-size: 0.60rem; color: var(--y); margin-bottom: 8px; text-transform: uppercase;">Security Question</label>
+      <p style="font-size: 0.85rem; color: #fff; margin-bottom: 8px;" id="recoveryQuestionText">What is the restaurant's slogan?</p>
+      <input type="text" id="recoveryAnswer" style="width: 100%; padding: 8px; border: 1.5px solid var(--border); background: var(--blk); color: #fff; border-radius: 6px; outline: none; font-family: inherit; box-sizing: border-box;" placeholder="Enter your answer">
+    </div>
+    
+    <div id="recoveryError" style="color: var(--r); font-family: var(--ff-mono); font-size: 0.75rem; margin-top: -0.5rem; margin-bottom: 1rem; display: none;">Incorrect answer!</div>
+    <div id="recoverySuccess" style="color: #33ff33; font-family: var(--ff-mono); font-size: 0.75rem; margin-top: -0.5rem; margin-bottom: 1rem; display: none;">Passcode reset to default (1234)! Redirecting...</div>
+    
+    <button class="admin-btn admin-btn-primary" style="width: 100%;" id="recoverySubmitBtn" onclick="submitRecoveryAnswer()">Verify &amp; Reset</button>
+  </div>
+</div>
+
+<!-- Admin Change Passcode Overlay -->
+<div class="admin-overlay" id="changePasswordOverlay">
+  <div class="admin-modal" style="max-width: 380px; text-align: center;">
+    <button class="admin-modal-close" onclick="closeChangePassword()">&times;</button>
+    <h3>Change <span class="y">Passcode</span></h3>
+    <p style="font-size: 0.8rem; color: var(--muted); margin-bottom: 1.5rem; font-family: var(--ff-mono);">Set a new admin access code</p>
+    
+    <div class="admin-form-group" style="text-align: left; margin-bottom: 1rem;">
+      <label for="newPasscode" style="display: block; font-family: var(--ff-mono); font-size: 0.60rem; color: var(--y); margin-bottom: 4px; text-transform: uppercase;">New Passcode</label>
+      <input type="password" id="newPasscode" style="width: 100%; padding: 8px; border: 1.5px solid var(--border); background: var(--blk); color: #fff; border-radius: 6px; outline: none; font-family: inherit; box-sizing: border-box;" placeholder="Enter new passcode" maxlength="6">
+    </div>
+    
+    <div class="admin-form-group" style="text-align: left; margin-bottom: 1rem;">
+      <label for="confirmPasscode" style="display: block; font-family: var(--ff-mono); font-size: 0.60rem; color: var(--y); margin-bottom: 4px; text-transform: uppercase;">Confirm Passcode</label>
+      <input type="password" id="confirmPasscode" style="width: 100%; padding: 8px; border: 1.5px solid var(--border); background: var(--blk); color: #fff; border-radius: 6px; outline: none; font-family: inherit; box-sizing: border-box;" placeholder="Confirm new passcode" maxlength="6">
+    </div>
+    
+    <div id="changePasswordError" style="color: var(--r); font-family: var(--ff-mono); font-size: 0.75rem; margin-top: -0.5rem; margin-bottom: 1rem; display: none;">Passcodes do not match!</div>
+    <div id="changePasswordSuccess" style="color: #33ff33; font-family: var(--ff-mono); font-size: 0.75rem; margin-top: -0.5rem; margin-bottom: 1rem; display: none;">Passcode updated successfully!</div>
+    
+    <button class="admin-btn admin-btn-primary" style="width: 100%;" onclick="submitChangePassword()">Save Passcode</button>
+  </div>
+</div>
+
+<!-- Admin Add/Edit Menu Item Overlay -->
+<div class="admin-overlay" id="adminItemOverlay">
+  <div class="admin-modal">
+    <button class="admin-modal-close" onclick="closeAdminItem()">&times;</button>
+    <h3 id="modalTitle">Edit <span class="y">Item</span></h3>
+    <form id="adminItemForm">
+      <input type="hidden" id="itemId" />
+      <div class="admin-form-group">
+        <label>Category</label>
+        <select id="itemCategory">
+          <option value="broasted">🍗 Broasted</option>
+          <option value="sandwiches">🥪 Sandwiches</option>
+          <option value="western">🍟 Western Meals</option>
+          <option value="boom">💥 Boom</option>
+          <option value="sides">🥗 Sides</option>
+        </select>
+      </div>
+      <div class="admin-form-row">
+        <div class="admin-form-group">
+          <label>Name (English)</label>
+          <input type="text" id="itemNameEn" placeholder="e.g. Fried Chicken" />
+        </div>
+        <div class="admin-form-group">
+          <label>Name (Arabic)</label>
+          <input type="text" id="itemNameAr" placeholder="مثال: فروج بروستد" dir="rtl" />
+        </div>
+      </div>
+      <div class="admin-form-row">
+        <div class="admin-form-group">
+          <label>Description (English)</label>
+          <textarea id="itemDescEn" placeholder="Whole broasted chicken..."></textarea>
+        </div>
+        <div class="admin-form-group">
+          <label>Description (Arabic)</label>
+          <textarea id="itemDescAr" placeholder="فروج بروستد كامل مع الثوم والخبز..." dir="rtl"></textarea>
+        </div>
+      </div>
+      <div class="admin-form-row">
+        <div class="admin-form-group">
+          <label>Price Display</label>
+          <input type="text" id="itemPrice" placeholder="e.g. 150,000 S.P." />
+        </div>
+        <div class="admin-form-group">
+          <label>Card Tag (Optional)</label>
+          <input type="text" id="itemTag" placeholder="e.g. Signature, Popular" />
+        </div>
+      </div>
+      <div class="admin-form-row">
+        <div class="admin-form-group">
+          <label>Emoji Icon (Fallback)</label>
+          <input type="text" id="itemIcon" placeholder="e.g. 🍗" />
+        </div>
+        <div class="admin-form-group">
+          <label>Product Image</label>
+          <input type="file" id="itemImageFile" accept="image/*" onchange="handleImageUpload(event)" style="display: none;" />
+          <button type="button" class="admin-btn admin-btn-secondary" style="width: 100%; padding: 0.8rem 0;" onclick="document.getElementById('itemImageFile').click()">Choose File...</button>
+          <div id="imagePreviewContainer" style="margin-top: 0.5rem; text-align: center; display: none;">
+            <img id="imagePreview" src="" style="max-height: 80px; border: 1px solid var(--border);" />
+            <button type="button" class="admin-btn admin-btn-danger" style="padding: 0.2rem 0.5rem; font-size: 0.6rem; margin-top: 0.2rem; display: block; margin-left: auto; margin-right: auto;" onclick="clearImageUpload()">Remove Image</button>
+          </div>
+          <input type="hidden" id="itemImageBase64" />
+        </div>
+      </div>
+      <div class="admin-btn-row">
+        <button type="submit" class="admin-btn admin-btn-primary">Save Item</button>
+        <button type="button" id="deleteItemBtn" class="admin-btn admin-btn-danger" onclick="deleteAdminItem()">Delete</button>
+        <button type="button" class="admin-btn admin-btn-secondary" onclick="closeAdminItem()">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+
+
+// Hamburger
+const hbg = document.getElementById('hbg');
+const mob = document.getElementById('mobMenu');
+hbg.addEventListener('click',()=>{hbg.classList.toggle('open');mob.classList.toggle('open')});
+function closeMob(){hbg.classList.remove('open');mob.classList.remove('open')}
+document.addEventListener('click',e=>{if(!hbg.contains(e.target)&&!mob.contains(e.target))closeMob()});
+
+// ── DYNAMIC MENU DATA & RENDERING CODE ──
+const initialMenuData = [
+  // BROASTED
+  {
+    id: 'b1',
+    category: 'broasted',
+    emoji: '🍗',
+    image: '',
+    tag: 'Signature',
+    price: '150,000 S.P.',
+    nameEn: 'Fried Chicken',
+    nameAr: 'فروج بروستد كامل',
+    descEn: 'Whole broasted chicken — golden, crispy, juicy',
+    descAr: 'فروج بروستد كامل - مقرمش ولذيذ'
+  },
+  {
+    id: 'b2',
+    category: 'broasted',
+    emoji: '🍗',
+    image: '',
+    tag: '',
+    price: '80,000 S.P.',
+    nameEn: 'Half Fried Chicken',
+    nameAr: 'نصف فروج بروستد',
+    descEn: 'Half broasted — perfect for one',
+    descAr: 'نصف فروج بروستد - مثالي لشخص واحد'
+  },
+  {
+    id: 'b3',
+    category: 'broasted',
+    emoji: '🍖',
+    image: '',
+    tag: 'Popular',
+    price: '95,000 S.P.',
+    nameEn: 'Crispy Drumsticks',
+    nameAr: 'وجبة دبابيس كريسبي',
+    descEn: 'Meal + garlic · saba · pickle · bread · cola',
+    descAr: 'وجبة دبابيس كريسبي + ثومية، بطاطا، مخلل، خبز'
+  },
+  {
+    id: 'b4',
+    category: 'broasted',
+    emoji: '🍗',
+    image: '',
+    tag: '',
+    price: '70,000 S.P.',
+    nameEn: 'Buffalo Wings',
+    nameAr: 'جوانح بوفالو',
+    descEn: 'Meal + garlic · saba · pickle · bread · cola',
+    descAr: 'وجبة جوانح بوفالو + ثومية، بطاطا، مخلل، خبز'
+  },
+  // SANDWICHES
+  {
+    id: 's1',
+    category: 'sandwiches',
+    emoji: '🥪',
+    image: '',
+    tag: 'Fan Fave',
+    price: '40,000 S.P.',
+    nameEn: 'Crispy',
+    nameAr: 'ساندويش كريسبي',
+    descEn: 'Chicken · cocktail sauce · cheddar · coleslaw · lettuce',
+    descAr: 'دجاج، صلصة كوكتيل، جبنة شيدر، كولسلو، خس'
+  },
+  {
+    id: 's2',
+    category: 'sandwiches',
+    emoji: '🌶️',
+    image: '',
+    tag: '',
+    price: '45,000 S.P.',
+    nameEn: 'Zinger',
+    nameAr: 'ساندويش زنجر',
+    descEn: 'Chicken · dynamite sauce · cheddar · coleslaw · lettuce',
+    descAr: 'دجاج، صلصة ديناميت، جبنة شيدر، كولسلو، خس'
+  },
+  {
+    id: 's3',
+    category: 'sandwiches',
+    emoji: '🥪',
+    image: '',
+    tag: 'Signature',
+    price: '45,000 S.P.',
+    nameEn: 'Chickenji Escalope',
+    nameAr: 'إسكالوب تشيكنجي',
+    descEn: 'Chicken · chickenji sauce · coleslaw · lettuce',
+    descAr: 'دجاج، صلصة تشيكنجي الخاصة، كولسلو، خس'
+  },
+  {
+    id: 's4',
+    category: 'sandwiches',
+    emoji: '🌮',
+    image: '',
+    tag: '',
+    price: '50,000 S.P.',
+    nameEn: 'Fajita',
+    nameAr: 'ساندويش فاهيتا',
+    descEn: 'Chicken · mozzarella · garlic · mushroom · corn',
+    descAr: 'دجاج، جبنة موزاريلا، ثوم، فطر، ذرة'
+  },
+  {
+    id: 's5',
+    category: 'sandwiches',
+    emoji: '🌶️',
+    image: '',
+    tag: '',
+    price: '50,000 S.P.',
+    nameEn: 'Mexicano',
+    nameAr: 'ساندويش مكسيكانو',
+    descEn: 'Spicy chicken · mozzarella · saba · mushroom · corn',
+    descAr: 'دجاج حار، جبنة موزاريلا، ثومية، فطر، ذرة'
+  },
+  {
+    id: 's6',
+    category: 'sandwiches',
+    emoji: '🧀',
+    image: '',
+    tag: 'Best Seller',
+    price: '65,000 S.P.',
+    nameEn: 'Crunchy Chickenji',
+    nameAr: 'كرانشي تشيكنجي أسطوري',
+    descEn: 'Double chicken · cheddar · mozzarella · sticks · chickenji sauce · coleslaw · lettuce · tomato',
+    descAr: 'دجاج مضاعف، جبنة شيدر وموزاريلا، أصابع موزاريلا، صلصة تشيكنجي، كولسلو، خس، طماطم'
+  },
+  {
+    id: 's7',
+    category: 'sandwiches',
+    emoji: '🥔',
+    image: '',
+    tag: '',
+    price: '30,000 S.P.',
+    nameEn: 'Potato Cheese',
+    nameAr: 'ساندويش بطاطا بالجبنة',
+    descEn: 'Potato · mozzarella · mayo · coleslaw · ketchup',
+    descAr: 'بطاطا، جبنة موزاريلا، مايونيز، كولسلو، كاتشب'
+  },
+  {
+    id: 's8',
+    category: 'sandwiches',
+    emoji: '🧀',
+    image: '',
+    tag: '',
+    price: '50,000 S.P.',
+    nameEn: 'Shish Cheese',
+    nameAr: 'شيش بالجبنة',
+    descEn: 'Chicken · mozzarella · garlic · cream sauce',
+    descAr: 'دجاج، جبنة موزاريلا، ثوم، صلصة الكريمة'
+  },
+  {
+    id: 's9',
+    category: 'sandwiches',
+    emoji: '🍗',
+    image: '',
+    tag: '',
+    price: '48,000 S.P.',
+    nameEn: 'Crunchy Chicken',
+    nameAr: 'ساندويش كرانشي دجاج',
+    descEn: 'Chicken · cheddar · cocktail · coleslaw · lettuce',
+    descAr: 'دجاج، جبنة شيدر، صلصة كوكتيل، كولسلو، خس'
+  },
+  // WESTERN
+  {
+    id: 'w1',
+    category: 'western',
+    emoji: '🍟',
+    image: '',
+    tag: '',
+    price: '110,000 S.P.',
+    nameEn: 'Crispy Meal',
+    nameAr: 'وجبة كريسبي',
+    descEn: 'Chicken · fries · coleslaw · sauce · pickle',
+    descAr: 'دجاج، بطاطا، كولسلو، صلصة، مخلل'
+  },
+  {
+    id: 'w2',
+    category: 'western',
+    emoji: '🍟',
+    image: '',
+    tag: '',
+    price: '115,000 S.P.',
+    nameEn: 'Zinger Meal',
+    nameAr: 'وجبة زنجر',
+    descEn: 'Chicken · fries · coleslaw · sauce · pickle',
+    descAr: 'دجاج، بطاطا، كولسلو، صلصة، مخلل'
+  },
+  {
+    id: 'w3',
+    category: 'western',
+    emoji: '🧀',
+    image: '',
+    tag: 'Special',
+    price: '120,000 S.P.',
+    nameEn: 'Chickenji Escalope Meal',
+    nameAr: 'وجبة إسكالوب تشيكنجي',
+    descEn: 'Chicken · mozzarella · coleslaw · chickenji sauce · pickle',
+    descAr: 'دجاج، جبنة موزاريلا، كولسلو، صلصة تشيكنجي، مخلل'
+  },
+  {
+    id: 'w4',
+    category: 'western',
+    emoji: '🌮',
+    image: '',
+    tag: '',
+    price: '120,000 S.P.',
+    nameEn: 'Fajita Meal',
+    nameAr: 'وجبة فاهيتا',
+    descEn: 'Chicken · fries · coleslaw · sauce · pickle',
+    descAr: 'دجاج، بطاطا، كولسلو، صلصة، مخلل'
+  },
+  {
+    id: 'w5',
+    category: 'western',
+    emoji: '🌶️',
+    image: '',
+    tag: '',
+    price: '120,000 S.P.',
+    nameEn: 'Mexicano Meal',
+    nameAr: 'وجبة مكسيكانو',
+    descEn: 'Chicken · fries · coleslaw · sauce · pickle',
+    descAr: 'دجاج، بطاطا، كولسلو، صلصة، مخلل'
+  },
+  {
+    id: 'w6',
+    category: 'western',
+    emoji: '🍿',
+    image: '',
+    tag: '',
+    price: '100,000 S.P.',
+    nameEn: 'Chicken Pop Corn',
+    nameAr: 'وجبة بوب كورن الدجاج',
+    descEn: 'Chicken · fries · coleslaw · sauce · pickle',
+    descAr: 'دجاج، بطاطا، كولسلو، صلصة، مخلل'
+  },
+  {
+    id: 'w7',
+    category: 'western',
+    emoji: '⭐',
+    image: '',
+    tag: 'Special',
+    price: '115,000 S.P.',
+    nameEn: 'Maria Chickenji',
+    nameAr: 'ماريا تشيكنجي',
+    descEn: 'Chicken · mozzarella · chickenji sauce · coleslaw',
+    descAr: 'دجاج، جبنة موزاريلا، صلصة تشيكنجي، كولسلو'
+  },
+  {
+    id: 'w8',
+    category: 'western',
+    emoji: '🧀',
+    image: '',
+    tag: '',
+    price: '120,000 S.P.',
+    nameEn: 'Shish & Cheese Meal',
+    nameAr: 'وجبة شيش بالجبنة',
+    descEn: 'Chicken · mozzarella · fries · coleslaw · sauce · pickle',
+    descAr: 'دجاج، جبنة موزاريلا، بطاطا، كولسلو، صلصة، مخلل'
+  },
+  // BOOM
+  {
+    id: 'bo1',
+    category: 'boom',
+    emoji: '💥',
+    image: '',
+    tag: 'Boom!',
+    price: '130,000 S.P.',
+    nameEn: 'Crispy Boom',
+    nameAr: 'كريسبي بووم',
+    descEn: 'Chicken & fries mix · mozzarella · special boom sauce',
+    descAr: 'خلطة الدجاج والبطاطا، جبنة موزاريلا، صلصة بووم الخاصة'
+  },
+  {
+    id: 'bo2',
+    category: 'boom',
+    emoji: '💥',
+    image: '',
+    tag: '',
+    price: '130,000 S.P.',
+    nameEn: 'Escalope Boom',
+    nameAr: 'إسكالوب بووم',
+    descEn: 'Chicken & fries mix · mozzarella · special boom sauce',
+    descAr: 'خلطة الدجاج والبطاطا، جبنة موزاريلا، صلصة بووم الخاصة'
+  },
+  {
+    id: 'bo3',
+    category: 'boom',
+    emoji: '💥',
+    image: '',
+    tag: '',
+    price: '135,000 S.P.',
+    nameEn: 'Fajita Boom',
+    nameAr: 'فاهيتا بووم',
+    descEn: 'Chicken & fries mix · mozzarella · special boom sauce',
+    descAr: 'خلطة الدجاج والبطاطا، جبنة موزاريلا، صلصة بووم الخاصة'
+  },
+  {
+    id: 'bo4',
+    category: 'boom',
+    emoji: '💥',
+    image: '',
+    tag: '',
+    price: '135,000 S.P.',
+    nameEn: 'Mexicano Boom',
+    nameAr: 'مكسيكانو بووم',
+    descEn: 'Chicken & fries mix · mozzarella · special boom sauce',
+    descAr: 'خلطة الدجاج والبطاطا، جبنة موزاريلا، صلصة بووم الخاصة'
+  },
+  // SIDES
+  {
+    id: 'sd1',
+    category: 'sides',
+    emoji: '🍝',
+    image: '',
+    tag: '',
+    price: '85,000 S.P.',
+    nameEn: 'Pasta',
+    nameAr: 'باستا',
+    descEn: 'Samba · Chicken · Crunchy · Sausage',
+    descAr: 'سامبا، دجاج، كرانشي، سجق'
+  },
+  {
+    id: 'sd2',
+    category: 'sides',
+    emoji: '🥔',
+    image: '',
+    tag: '',
+    price: '75,000 S.P.',
+    nameEn: 'Loaded Potatoes',
+    nameAr: 'بطاطا لودد تشيكنجي',
+    descEn: 'Cheese fries · Creamy · Dynamite · Chickenji style',
+    descAr: 'بطاطا بالجبنة، كريمة، ديناميت، على طريقة تشيكنجي'
+  },
+  {
+    id: 'sd3',
+    category: 'sides',
+    emoji: '🧀',
+    image: '',
+    tag: '',
+    price: '60,000 S.P.',
+    nameEn: 'Mozzarella Sticks',
+    nameAr: 'أصابع موزاريلا',
+    descEn: 'Golden fried mozzarella sticks',
+    descAr: 'أصابع موزاريلا ذهبية مقلية'
+  },
+  {
+    id: 'sd4',
+    category: 'sides',
+    emoji: '🥗',
+    image: '',
+    tag: '',
+    price: '55,000 S.P.',
+    nameEn: 'Salads',
+    nameAr: 'سلطات متنوعة',
+    descEn: 'Poutine Bowl · Macaroni · Chicken Caesar · Coleslaw · Corn',
+    descAr: 'بوتين بول، معكرونة، سيزر الدجاج، كولسلو، ذرة'
+  }
+];
+
+let menuItems;
+try {
+  const savedMenu = localStorage.getItem('chickenji_menu');
+  menuItems = (savedMenu && savedMenu !== 'undefined') ? JSON.parse(savedMenu) : initialMenuData;
+  if (!Array.isArray(menuItems)) {
+    menuItems = initialMenuData;
+  }
+} catch (err) {
+  menuItems = initialMenuData;
+}
+let activeCategory = 'broasted';
+let isAdminMode = false;
+let isAuthenticated = sessionStorage.getItem('chickenji_admin_authed') === 'true';
+
+const cats = ['broasted', 'sandwiches', 'western', 'boom', 'sides'];
+
+function renderMenu() {
+  const grid = document.getElementById('cardsGrid');
+  if (!grid) return;
+  grid.innerHTML = '';
+
+  const filtered = menuItems.filter(item => item.category === activeCategory);
+
+  filtered.forEach((item, index) => {
+    const card = document.createElement('div');
+    const delayClass = index % 4 === 1 ? 'd1' : index % 4 === 2 ? 'd2' : index % 4 === 3 ? 'd3' : '';
+    card.className = `mcard ${delayClass}`;
+
+    let headerHTML = '';
+    if (item.image) {
+      headerHTML = `<img src="${item.image}" alt="${currentLang === 'ar' ? item.nameAr : item.nameEn}" class="mcard-img" />`;
+    } else {
+      headerHTML = `<span style="position: relative; z-index: 1;">${item.emoji || '🍗'}</span>`;
+    }
+
+    if (item.tag) {
+      headerHTML += `<div class="mcard-tag">${item.tag}</div>`;
+    }
+
+    const name = currentLang === 'ar' ? item.nameAr : item.nameEn;
+    const desc = currentLang === 'ar' ? item.descAr : item.descEn;
+    const editBtnHTML = isAdminMode ? `<button class="mcard-edit-btn" onclick="openEditItemModal(event, '${item.id}')" title="Edit Item">✏️</button>` : '';
+
+    card.innerHTML = `
+      <div class="mcard-top">
+        ${headerHTML}
+        ${editBtnHTML}
+      </div>
+      <div class="mcard-body">
+        <div class="mcard-name">${name}</div>
+        <div class="mcard-desc">${desc}</div>
+      </div>
+      <div class="mcard-foot">
+        <span class="mcard-price">${item.price}</span>
+        <a href="tel:+963984444151" class="mcard-cta">${currentLang === 'ar' ? 'اطلب الآن <span class="arrow">←</span>' : 'Order <span class="arrow">→</span>'}</a>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+
+  if (isAdminMode) {
+    const addCard = document.createElement('div');
+    addCard.className = 'mcard mcard-add';
+    addCard.setAttribute('onclick', 'openAddItemModal()');
+    addCard.innerHTML = `
+      <div class="mcard-add-icon">+</div>
+      <div class="mcard-add-text">${currentLang === 'ar' ? 'إضافة صنف' : 'Add Item'}</div>
+    `;
+    grid.appendChild(addCard);
+  }
+}
+
+function filter(e, cat) {
+  activeCategory = cat;
+  document.querySelectorAll('.fpill').forEach(b => b.classList.remove('active'));
+  if (e && e.target) {
+    e.target.classList.add('active');
+  } else {
+    const filterBtn = document.getElementById('filter' + (cats.indexOf(cat) + 1));
+    if (filterBtn) filterBtn.classList.add('active');
+  }
+  renderMenu();
+}
+
+// ── ADMIN MODE CONTROLS ──
+function toggleAdminMode() {
+  if (isAdminMode) {
+    isAdminMode = false;
+    document.body.classList.remove('admin-active');
+    renderMenu();
+  } else {
+    if (isAuthenticated) {
+      isAdminMode = true;
+      document.body.classList.add('admin-active');
+      renderMenu();
+    } else {
+      openAdminPasscodeModal();
+    }
+  }
+}
+
+function openAdminPasscodeModal() {
+  const overlay = document.getElementById('adminPasscodeOverlay');
+  if (overlay) {
+    overlay.classList.add('open');
+    document.getElementById('adminPasscode').value = '';
+    document.getElementById('passcodeError').style.display = 'none';
+    document.getElementById('adminPasscode').focus();
+  }
+}
+
+function closeAdminPasscode() {
+  const overlay = document.getElementById('adminPasscodeOverlay');
+  if (overlay) overlay.classList.remove('open');
+}
+
+// Helper to compute SHA-256 hash securely on client-side (requires secure context/HTTPS)
+async function sha256(message) {
+  const msgBuffer = new TextEncoder().encode(message);
+  const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+  return hashHex;
+}
+
+async function submitPasscode() {
+  const code = document.getElementById('adminPasscode').value;
+  const hashedInput = await sha256(code);
+  // Default '1234' hash: '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4'
+  const savedHash = localStorage.getItem('chickenji_admin_password_hash') || '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4';
+  
+  if (hashedInput === savedHash) {
+    isAuthenticated = true;
+    sessionStorage.setItem('chickenji_admin_authed', 'true');
+    closeAdminPasscode();
+    isAdminMode = true;
+    document.body.classList.add('admin-active');
+    renderMenu();
+  } else {
+    document.getElementById('passcodeError').style.display = 'block';
+  }
+}
+
+function openChangePasswordModal() {
+  const overlay = document.getElementById('changePasswordOverlay');
+  if (overlay) {
+    overlay.classList.add('open');
+    document.getElementById('newPasscode').value = '';
+    document.getElementById('confirmPasscode').value = '';
+    document.getElementById('changePasswordError').style.display = 'none';
+    document.getElementById('changePasswordSuccess').style.display = 'none';
+    document.getElementById('newPasscode').focus();
+  }
+}
+
+function closeChangePassword() {
+  const overlay = document.getElementById('changePasswordOverlay');
+  if (overlay) overlay.classList.remove('open');
+}
+
+async function submitChangePassword() {
+  const newPass = document.getElementById('newPasscode').value;
+  const confirmPass = document.getElementById('confirmPasscode').value;
+  const errorEl = document.getElementById('changePasswordError');
+  const successEl = document.getElementById('changePasswordSuccess');
+  
+  errorEl.style.display = 'none';
+  successEl.style.display = 'none';
+  
+  if (!newPass) {
+    errorEl.textContent = 'Passcode cannot be empty!';
+    errorEl.style.display = 'block';
+    return;
+  }
+  
+  if (newPass !== confirmPass) {
+    errorEl.textContent = 'Passcodes do not match!';
+    errorEl.style.display = 'block';
+    return;
+  }
+  
+  try {
+    const hashed = await sha256(newPass);
+    localStorage.setItem('chickenji_admin_password_hash', hashed);
+    successEl.style.display = 'block';
+    setTimeout(() => {
+      closeChangePassword();
+    }, 1500);
+  } catch (err) {
+    errorEl.textContent = 'Error encrypting passcode!';
+    errorEl.style.display = 'block';
+  }
+}
+
+// URL check for admin reset (?reset_admin=true)
+(() => {
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.get('reset_admin') === 'true') {
+    localStorage.removeItem('chickenji_admin_password_hash');
+    console.log("Admin passcode reset to default (1234) via URL parameter.");
+  }
+})();
+
+function showRecoveryQuestion() {
+  document.getElementById('passcodeError').style.display = 'none';
+  closeAdminPasscode();
+  
+  const overlay = document.getElementById('adminRecoveryOverlay');
+  if (overlay) {
+    overlay.classList.add('open');
+    document.getElementById('recoveryAnswer').value = '';
+    document.getElementById('recoveryError').style.display = 'none';
+    document.getElementById('recoverySuccess').style.display = 'none';
+    document.getElementById('recoveryAnswer').focus();
+  }
+}
+
+function closeAdminRecovery() {
+  const overlay = document.getElementById('adminRecoveryOverlay');
+  if (overlay) overlay.classList.remove('open');
+}
+
+function submitRecoveryAnswer() {
+  const answer = document.getElementById('recoveryAnswer').value.trim().toLowerCase();
+  const normalized = answer.replace(/[.,'\"#!$%\^&\*;:{}=\-_`~()]/g,"");
+  
+  const isCorrect = (
+    normalized === 'the taste of happiness' || 
+    normalized === 'taste of happiness' || 
+    normalized === 'طعم السعادة' || 
+    normalized === 'طعم سعاده' ||
+    normalized === 'طعم السعاده'
+  );
+  
+  const errorEl = document.getElementById('recoveryError');
+  const successEl = document.getElementById('recoverySuccess');
+  
+  if (isCorrect) {
+    localStorage.removeItem('chickenji_admin_password_hash');
+    errorEl.style.display = 'none';
+    successEl.style.display = 'block';
+    
+    setTimeout(() => {
+      closeAdminRecovery();
+      openAdminPasscodeModal();
+    }, 2000);
+  } else {
+    errorEl.style.display = 'block';
+  }
+}
+
+// Passcode input ENTER listener & Form Submit listener
+document.addEventListener('DOMContentLoaded', () => {
+  const passInput = document.getElementById('adminPasscode');
+  if (passInput) {
+    passInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') submitPasscode();
+    });
+  }
+  
+  const newPassInput = document.getElementById('newPasscode');
+  const confirmPassInput = document.getElementById('confirmPasscode');
+  if (newPassInput) {
+    newPassInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') submitChangePassword();
+    });
+  }
+  if (confirmPassInput) {
+    confirmPassInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') submitChangePassword();
+    });
+  }
+  
+  const recoveryInput = document.getElementById('recoveryAnswer');
+  if (recoveryInput) {
+    recoveryInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') submitRecoveryAnswer();
+    });
+  }
+  
+  const itemForm = document.getElementById('adminItemForm');
+  if (itemForm) {
+    itemForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      saveAdminItem(e);
+    });
+  }
+});
+
+let uploadedImageBase64 = '';
+
+function openAddItemModal() {
+  document.getElementById('modalTitle').innerHTML = currentLang === 'ar' ? 'إضافة <span class="y">صنف</span>' : 'Add <span class="y">Item</span>';
+  document.getElementById('itemId').value = '';
+  document.getElementById('itemCategory').value = activeCategory;
+  document.getElementById('itemNameEn').value = '';
+  document.getElementById('itemNameAr').value = '';
+  document.getElementById('itemDescEn').value = '';
+  document.getElementById('itemDescAr').value = '';
+  document.getElementById('itemPrice').value = '';
+  document.getElementById('itemTag').value = '';
+  document.getElementById('itemIcon').value = '🍗';
+  document.getElementById('itemImageBase64').value = '';
+  uploadedImageBase64 = '';
+  
+  document.getElementById('imagePreviewContainer').style.display = 'none';
+  document.getElementById('deleteItemBtn').style.display = 'none';
+  document.getElementById('adminItemOverlay').classList.add('open');
+}
+
+function openEditItemModal(e, id) {
+  if (e) e.stopPropagation();
+  const item = menuItems.find(i => i.id === id);
+  if (!item) return;
+  
+  document.getElementById('modalTitle').innerHTML = currentLang === 'ar' ? 'تعديل <span class="y">الصنف</span>' : 'Edit <span class="y">Item</span>';
+  document.getElementById('itemId').value = item.id;
+  document.getElementById('itemCategory').value = item.category;
+  document.getElementById('itemNameEn').value = item.nameEn;
+  document.getElementById('itemNameAr').value = item.nameAr;
+  document.getElementById('itemDescEn').value = item.descEn;
+  document.getElementById('itemDescAr').value = item.descAr;
+  document.getElementById('itemPrice').value = item.price;
+  document.getElementById('itemTag').value = item.tag || '';
+  document.getElementById('itemIcon').value = item.emoji || '🍗';
+  document.getElementById('itemImageBase64').value = item.image || '';
+  uploadedImageBase64 = item.image || '';
+  
+  if (item.image) {
+    document.getElementById('imagePreview').src = item.image;
+    document.getElementById('imagePreviewContainer').style.display = 'block';
+  } else {
+    document.getElementById('imagePreviewContainer').style.display = 'none';
+  }
+  
+  document.getElementById('deleteItemBtn').style.display = 'block';
+  document.getElementById('adminItemOverlay').classList.add('open');
+}
+
+function closeAdminItem() {
+  document.getElementById('adminItemOverlay').classList.remove('open');
+}
+
+function handleImageUpload(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  
+  const reader = new FileReader();
+  reader.onload = function(event) {
+    const img = new Image();
+    img.onload = function() {
+      const MAX_WIDTH = 400;
+      const MAX_HEIGHT = 400;
+      let width = img.width;
+      let height = img.height;
+      
+      if (width > height) {
+        if (width > MAX_WIDTH) {
+          height = Math.round((height * MAX_WIDTH) / width);
+          width = MAX_WIDTH;
+        }
+      } else {
+        if (height > MAX_HEIGHT) {
+          width = Math.round((width * MAX_HEIGHT) / height);
+          height = MAX_HEIGHT;
+        }
+      }
+      
+      const canvas = document.createElement('canvas');
+      canvas.width = width;
+      canvas.height = height;
+      const ctx = canvas.getContext('2d');
+      // Set background to #1a1a1a to match dark theme mcard-top background
+      ctx.fillStyle = '#1a1a1a';
+      ctx.fillRect(0, 0, width, height);
+      ctx.drawImage(img, 0, 0, width, height);
+      
+      // Compress to JPEG with 0.7 quality
+      const compressedBase64 = canvas.toDataURL('image/jpeg', 0.7);
+      
+      uploadedImageBase64 = compressedBase64;
+      document.getElementById('itemImageBase64').value = uploadedImageBase64;
+      document.getElementById('imagePreview').src = uploadedImageBase64;
+      document.getElementById('imagePreviewContainer').style.display = 'block';
+    };
+    img.src = event.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+function clearImageUpload() {
+  uploadedImageBase64 = '';
+  document.getElementById('itemImageBase64').value = '';
+  document.getElementById('itemImageFile').value = '';
+  document.getElementById('imagePreviewContainer').style.display = 'none';
+}
+
+function saveAdminItem(e) {
+  if (e) e.preventDefault();
+  
+  try {
+    const id = document.getElementById('itemId').value;
+    const category = document.getElementById('itemCategory').value;
+    const nameEn = document.getElementById('itemNameEn').value.trim();
+    const nameAr = document.getElementById('itemNameAr').value.trim();
+    const descEn = document.getElementById('itemDescEn').value.trim();
+    const descAr = document.getElementById('itemDescAr').value.trim();
+    const price = document.getElementById('itemPrice').value.trim();
+    const tag = document.getElementById('itemTag').value.trim();
+    const emoji = document.getElementById('itemIcon').value.trim();
+    const image = document.getElementById('itemImageBase64').value;
+    
+    if (!nameEn || !nameAr || !descEn || !descAr || !price) {
+      alert(currentLang === 'ar' ? 'يرجى ملء جميع الحقول المطلوبة!' : 'Please fill in all required fields!');
+      return;
+    }
+    
+    if (id) {
+      // Edit existing
+      const index = menuItems.findIndex(item => item.id === id);
+      if (index !== -1) {
+        menuItems[index] = { id, category, emoji, image, tag, price, nameEn, nameAr, descEn, descAr };
+      }
+    } else {
+      // Add new
+      const newId = 'item_' + Date.now();
+      menuItems.push({ id: newId, category, emoji, image, tag, price, nameEn, nameAr, descEn, descAr });
+    }
+    
+    localStorage.setItem('chickenji_menu', JSON.stringify(menuItems));
+    closeAdminItem();
+    renderMenu();
+  } catch (err) {
+    if (err.name === 'QuotaExceededError' || err.code === 22) {
+      alert(currentLang === 'ar' ? 
+        'خطأ: تم تجاوز المساحة المتاحة للملفات! يرجى استخدام صورة أصغر أو إزالة الصور الكبيرة القديمة أو إعادة تعيين القائمة بالكامل.' : 
+        'Error: Storage quota exceeded! The image database is full. Please remove/replace large existing images, or reset the menu to defaults.');
+    } else {
+      alert("Error saving item: " + err.message);
+    }
+  }
+}
+
+function deleteAdminItem() {
+  const id = document.getElementById('itemId').value;
+  if (!id) return;
+  
+  const confirmMsg = currentLang === 'ar' ? 'هل أنت متأكد من حذف هذا الصنف؟' : 'Are you sure you want to delete this item?';
+  if (confirm(confirmMsg)) {
+    menuItems = menuItems.filter(item => item.id !== id);
+    localStorage.setItem('chickenji_menu', JSON.stringify(menuItems));
+    closeAdminItem();
+    renderMenu();
+  }
+}
+
+function resetMenuToDefault() {
+  const confirmMsg = currentLang === 'ar' ? 'سيؤدي هذا إلى إعادة تعيين القائمة بالكامل وتجاهل كافة التعديلات. هل أنت متأكد؟' : 'This will reset the entire menu and discard all edits. Are you sure?';
+  if (confirm(confirmMsg)) {
+    menuItems = [...initialMenuData];
+    localStorage.setItem('chickenji_menu', JSON.stringify(menuItems));
+    renderMenu();
+  }
+}
+
+// Scroll reveal
+const obs = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('v');obs.unobserve(e.target)}});
+},{threshold:0.08});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+// ── LANGUAGE TOGGLE ──
+const translations = {
+  en: {
+    lang: 'en', dir: 'ltr',
+    toggleBtn: 'عربي',
+    // Nav
+    navHome: 'Home', navAbout: 'About', navMenu: 'Menu', navContact: 'Contact', navOrder: '📞 Order Now',
+    // Hero
+    heroEyebrow: 'Broasted & Chicken Sandwiches',
+    heroBio: '<strong>Chickenji — The Taste of Happiness.</strong><br>Broasted perfection & legendary chicken sandwiches.',
+    heroBtn1: '🍗 Explore Menu', heroBtn2: '📍 Find Us',
+    // About
+    aboutLabel: 'Our Vibe',
+    aboutTitle: 'Crispy. Bold.<br><span class="y">Unmatched.</span>',
+    aboutP1: 'At Chickenji, every plate is a flex. We bring broasted perfection — pressure-cooked to golden, juicy, crunchy glory — alongside sandwiches that hit different every single time.',
+    aboutP2: 'From our iconic Crunchy Chickenji to loaded Fajita & Mexicano, this is fast food that actually slaps.',
+    feat1h: '🔥 Broasted', feat1p: 'Pressure-cooked, golden-crispy outside, juicy inside',
+    feat2h: '🥪 10+ Sandwiches', feat2p: 'Crispy, Zinger, Crunchy, Fajita, Mexicano & more',
+    feat3h: '🌿 Fresh Only', feat3p: 'Quality coleslaw, sauces & toppings made daily',
+    feat4h: '⚡ Fast Service', feat4p: 'Quick, hot & always hits the spot',
+    // Menu
+    menuLabel: 'What We Serve', menuTitle: 'Our <span class="y">Menu</span>',
+    filter1: '🍗 Broasted', filter2: '🥪 Sandwiches', filter3: '🍟 Western Meals', filter4: '💥 Boom', filter5: '🥗 Sides',
+
+    // Order strip
+    orderTitle: 'Ready to <em>Order?</em><br>We Got You.',
+    orderBtn1: '📞 Call Us', orderBtn2: '💬 WhatsApp',
+    // Contact
+    contactLabel: 'Find Us', contactTitle: 'Get In <span class="y">Touch</span>',
+    phone: 'Phone', whatsapp: 'WhatsApp', location: 'Location',
+    locationText: 'Dariya — Al-Mudhamiya Road<br>50m before the Cultural Center',
+    followUs: 'Follow Us',
+    // Footer
+    footerTagline: 'Broasted perfection & legendary chicken sandwiches',
+    rights: '<span id="footer-rights">© 2026 Chickenji. All rights reserved.</span>',
+    badgeText: '100% Fresh<span>Every Single Day</span>',
+    aboutBadge: '100% Fresh',
+    aboutBadgeSub: 'Every Single Day',
+    // Passcode Recovery
+    forgotPasscode: 'Forgot Passcode?',
+    recoveryTitle: 'Passcode <span class="y">Recovery</span>',
+    recoverySub: 'Answer the security question to reset the passcode to default (1234)',
+    recoveryQuestionLabel: 'Security Question',
+    recoveryQuestionText: "What is the restaurant's slogan?",
+    recoveryAnswerPlaceholder: 'Enter your answer',
+    recoverySubmitBtn: 'Verify & Reset'
+  },
+  ar: {
+    lang: 'ar', dir: 'rtl',
+    toggleBtn: 'English',
+    // Nav
+    navHome: 'الرئيسية', navAbout: 'عنّا', navMenu: 'القائمة', navContact: 'تواصل معنا', navOrder: '📞 اطلب الآن',
+    // Hero
+    heroEyebrow: 'بروستد وساندويشات دجاج',
+    heroBio: '<strong>تشيكنجي — طعم السعادة.</strong><br>بروستد لا يُضاهى وساندويشات دجاج أسطورية.',
+    heroBtn1: '🍗 استعرض القائمة', heroBtn2: '📍 موقعنا',
+    // About
+    aboutLabel: 'أجواؤنا',
+    aboutTitle: 'مقرمش. جريء.<br><span class="y">لا مثيل له.</span>',
+    aboutP1: 'في تشيكنجي، كل طبق هو تجربة لا تُنسى. نقدم بروستد مثالي — ذهبي،طري ومقرمش — إلى جانب ساندويشات تختلف في كل مرة.',
+    aboutP2: 'من كرانشي تشيكنجي الشهير إلى الفاهيتا والمكسيكانو، هذه هي الوجبات السريعة التي تستحق.',
+    feat1h: '🔥 بروستد', feat1p: 'طهي تحت الضغط، مقرمش من الخارج، طري من الداخل',
+    feat2h: '🥪 +10 ساندويش', feat2p: 'كريسبي، زنجر، كرانشي، فاهيتا، مكسيكانو والمزيد',
+    feat3h: '🌿 طازج دائماً', feat3p: 'كولسلو وصوصات وإضافات طازجة يومياً',
+    feat4h: '⚡ خدمة سريعة', feat4p: 'سريع، ساخن، ومضمون دائماً',
+    // Menu
+    menuLabel: 'ما نقدمه', menuTitle: 'قائمتنا <span class="y">الشهية</span>',
+    filter1: '🍗 بروستد', filter2: '🥪 ساندويشات', filter3: '🍟 وجبات غربية', filter4: '💥 بووم', filter5: '🥗 إضافات',
+
+    // Order strip
+    orderTitle: 'جاهز <em>للطلب؟</em><br>إحنا هون لك.',
+    orderBtn1: '📞 اتصل بنا', orderBtn2: '💬 واتساب',
+    // Contact
+    contactLabel: 'ابحث عنّا', contactTitle: 'تواصل <span class="y">معنا</span>',
+    phone: 'الهاتف', whatsapp: 'واتساب', location: 'الموقع',
+    locationText: 'داريا — طريق المعضمية<br>قبل المركز الثقافي بـ 50 متر',
+    followUs: 'تابعنا',
+    // Footer
+    footerTagline: 'بروستد لا يُضاهى وساندويشات دجاج أسطورية',
+    rights: '© 2026 تشيكنجي. جميع الحقوق محفوظة.',
+    aboutBadge: '١٠٠٪ طازج',
+    aboutBadgeSub: 'كل يوم بلا استثناء',
+    // Passcode Recovery
+    forgotPasscode: 'هل نسيت رمز المرور؟',
+    recoveryTitle: 'استعادة <span class="y">رمز المرور</span>',
+    recoverySub: 'أجب عن السؤال الأمني لإعادة تعيين رمز المرور إلى الافتراضي (1234)',
+    recoveryQuestionLabel: 'السؤال الأمني',
+    recoveryQuestionText: 'ما هو شعار المطعم؟',
+    recoveryAnswerPlaceholder: 'أدخل إجابتك هنا',
+    recoverySubmitBtn: 'التحقق وإعادة التعيين'
+  }
+};
+
+let currentLang = 'en';
+
+function toggleLang() {
+  currentLang = currentLang === 'en' ? 'ar' : 'en';
+  applyLang(currentLang);
+}
+
+function applyLang(lang) {
+  currentLang = lang;
+  const t = translations[lang];
+  const root = document.getElementById('root');
+  root.setAttribute('lang', t.lang);
+  root.setAttribute('dir', t.dir);
+
+  // Toggle buttons
+  document.querySelectorAll('#langToggle, .lang-toggle').forEach(b => b.textContent = t.toggleBtn);
+
+  // Render dynamic menu items
+  renderMenu();
+
+  // Nav
+  setHTML('#nav-home', t.navHome);
+  setHTML('#nav-about', t.navAbout);
+  setHTML('#nav-menu', t.navMenu);
+  setHTML('#nav-contact', t.navContact);
+  setHTML('#nav-order', t.navOrder);
+  setHTML('#mob-home', t.navHome);
+  setHTML('#mob-about', t.navAbout);
+  setHTML('#mob-menu', t.navMenu);
+  setHTML('#mob-contact', t.navContact);
+
+  // Hero
+  setHTML('#hero-eyebrow', t.heroEyebrow);
+  setHTML('#hero-bio', t.heroBio);
+  setHTML('#hero-btn1', t.heroBtn1);
+  setHTML('#hero-btn2', t.heroBtn2);
+
+  // About
+  setHTML('#about-label', t.aboutLabel);
+  setHTML('#about-title', t.aboutTitle);
+  setHTML('#about-p1', t.aboutP1);
+  setHTML('#about-p2', t.aboutP2);
+  setHTML('#feat1h', t.feat1h); setHTML('#feat1p', t.feat1p);
+  setHTML('#feat2h', t.feat2h); setHTML('#feat2p', t.feat2p);
+  setHTML('#feat3h', t.feat3h); setHTML('#feat3p', t.feat3p);
+  setHTML('#feat4h', t.feat4h); setHTML('#feat4p', t.feat4p);
+  setHTML('#about-badge', t.aboutBadge);
+  setHTML('#about-badge-sub', t.aboutBadgeSub);
+
+  // Menu section
+  setHTML('#menu-label', t.menuLabel);
+  setHTML('#menu-title', t.menuTitle);
+  setHTML('#filter1', t.filter1); setHTML('#filter2', t.filter2);
+  setHTML('#filter3', t.filter3); setHTML('#filter4', t.filter4); setHTML('#filter5', t.filter5);
+
+
+
+  // Order strip
+  setHTML('#order-title', t.orderTitle);
+  setHTML('#order-btn1', t.orderBtn1);
+  setHTML('#order-btn2', t.orderBtn2);
+
+  // Contact
+  setHTML('#contact-label', t.contactLabel);
+  setHTML('#contact-title', t.contactTitle);
+  setHTML('#contact-phone-h', t.phone);
+  setHTML('#contact-wa-h', t.whatsapp);
+  setHTML('#contact-loc-h', t.location);
+  setHTML('#contact-loc-p', t.locationText);
+  setHTML('#follow-label', t.followUs);
+
+  // Footer
+  setHTML('#footer-tagline', t.footerTagline);
+  setHTML('#footer-rights', t.footer_rights || t.rights);
+
+  // Passcode Recovery Translations
+  setHTML('#forgotPasscodeLink', t.forgotPasscode);
+  setHTML('#recoveryTitle', t.recoveryTitle);
+  setHTML('#recoverySub', t.recoverySub);
+  setHTML('#recoveryQuestionLabel', t.recoveryQuestionLabel);
+  setHTML('#recoveryQuestionText', t.recoveryQuestionText);
+  setHTML('#recoverySubmitBtn', t.recoverySubmitBtn);
+  const recAnswerInput = document.getElementById('recoveryAnswer');
+  if (recAnswerInput) recAnswerInput.placeholder = t.recoveryAnswerPlaceholder;
+
+  // Update ticker
+  document.querySelectorAll('.ticker-item').forEach((el, i) => {
+    const items_en = ['The Taste of Happiness', 'Broasted Chicken', 'Crispy Sandwiches', 'Chickenji Boom'];
+    const items_ar = ['طعم السعادة', 'بروستد مقرمش', 'ساندويشات كريسبي', 'تشيكنجي بووم'];
+    const items = lang === 'ar' ? items_ar : items_en;
+    el.childNodes[0].textContent = items[i % items.length] + ' ';
+  });
+}
+
+function setHTML(sel, html) {
+  const el = document.querySelector(sel);
+  if (el) el.innerHTML = html;
+}
+
+// Render dynamic menu items on load
+applyLang(currentLang);
+
+</script>
+</body>
+</html>
