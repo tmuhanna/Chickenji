@@ -1064,24 +1064,78 @@ footer {
   border-color: var(--y);
 }
 body.admin-active {
-  padding-top: 36px;
+  padding-top: 55px;
 }
 .admin-bar {
   display: none;
-  background: var(--y);
-  color: #000;
-  text-align: center;
-  padding: 0.6rem;
+  background: #18181b;
+  color: #fff;
+  border-bottom: 2px solid var(--y);
+  padding: 0.5rem 1rem;
   font-family: var(--ff-mono);
   font-size: 0.7rem;
   font-weight: 700;
-  letter-spacing: 2px;
   position: fixed;
   top: 90px;
   left: 0;
   right: 0;
   z-index: 480;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+}
+.admin-bar-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.admin-bar-title {
+  color: var(--y);
+  letter-spacing: 1.5px;
+  font-size: 0.75rem;
+}
+.admin-bar-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+.admin-btn-download {
+  background: var(--y) !important;
+  color: #000 !important;
+  border: none !important;
+  box-shadow: 2.5px 2.5px 0px #fff !important;
+}
+.admin-btn-download:hover {
+  background: #fff !important;
+  color: #000 !important;
+}
+.admin-toast {
+  position: fixed;
+  bottom: 25px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: #18181b;
+  color: #fff;
+  border: 1.5px solid var(--y);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.85);
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-family: var(--ff-mono);
+  font-size: 0.8rem;
+  z-index: 99999;
+  opacity: 0;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+  max-width: 90%;
+  text-align: center;
+}
+.admin-toast.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+  pointer-events: auto;
 }
 body.admin-active .admin-bar {
   display: block;

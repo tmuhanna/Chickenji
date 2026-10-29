@@ -17,10 +17,12 @@ Hosted via GitHub Pages: `https://<your-username>.github.io/chickenji`
   - Interactive menu filter tabs (Broasted, Sandwiches, Western Meals, Sides).
   - Social media and location contact bento stack.
 - **Bilingual Interface**: Seamless translation toggle (**English / Arabic**) with RTL (Right-to-Left) direction support, Cairo Arabic font integration, and LTR-corrected phone numbers.
-- **Dynamic Admin Editor**:
+- **Dynamic Admin Editor & Cache Invalidation**:
   - Hidden Editor Mode triggered via the gear icon (`⚙️`) at the bottom right.
   - Allows adding, modifying, and deleting menu items.
-  - Persistent storage of modifications in browser `localStorage`.
+  - **Zero-Cache Locking**: Automatic `MENU_VERSION` check ensures code updates automatically invalidate and replace stale browser caches for all visitors.
+  - **One-Click Export**: Top admin bar includes "📥 Save & Download HTML" to export a deploy-ready `index.html` with all edits baked into the source code, "📋 Export JSON" for menu exports, and "🔄 Clear Cache & Reset" for on-demand resets.
+  - Persistent local storage of modifications in browser `localStorage`.
 - **Secure Access**:
   - Passcode authorization with client-side **SHA-256 encryption** using the native Web Crypto API.
   - Secure Change Passcode overlay modal to reset the password.

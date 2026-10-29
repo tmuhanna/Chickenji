@@ -3,6 +3,10 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+
 <title>Chickenji — The Taste of Happiness</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Space+Mono:wght@400;700&family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
@@ -249,9 +253,16 @@
 
 <!-- Admin Mode Top Bar -->
 <div class="admin-bar" id="adminBar">
-  ADMIN MODE ACTIVE &nbsp;|&nbsp; 
-  <button class="admin-btn admin-btn-secondary" onclick="resetMenuToDefault()" style="padding: 2px 10px; font-size: 0.65rem; font-family: inherit; cursor: pointer; display: inline-block; vertical-align: middle;">Reset to Defaults</button>
-  <button class="admin-btn admin-btn-secondary" onclick="openChangePasswordModal()" style="padding: 2px 10px; font-size: 0.65rem; font-family: inherit; cursor: pointer; display: inline-block; vertical-align: middle; margin-left: 10px;">Change Passcode</button>
+  <div class="admin-bar-content">
+    <span class="admin-bar-title">⚡ ADMIN MODE ACTIVE</span>
+    <div class="admin-bar-actions">
+      <button class="admin-btn admin-btn-download" onclick="downloadUpdatedHTML()" title="Download updated index.html with all latest prices and changes baked in">📥 Save &amp; Download HTML</button>
+      <button class="admin-btn admin-btn-secondary" onclick="exportMenuJSON()" title="Export menu as JSON">📋 Export JSON</button>
+      <button class="admin-btn admin-btn-danger" onclick="clearCacheAndReset()" title="Clear cached prices and reload latest default menu">🔄 Clear Cache &amp; Reset</button>
+      <button class="admin-btn admin-btn-secondary" onclick="openChangePasswordModal()">🔑 Change Passcode</button>
+      <button class="admin-btn admin-btn-secondary" onclick="toggleAdminMode()">✕ Exit</button>
+    </div>
+  </div>
 </div>
 
 <!-- Floating Admin Gear Toggle Button -->
@@ -403,368 +414,376 @@ function closeMob(){hbg.classList.remove('open');mob.classList.remove('open')}
 document.addEventListener('click',e=>{if(!hbg.contains(e.target)&&!mob.contains(e.target))closeMob()});
 
 // ── DYNAMIC MENU DATA & RENDERING CODE ──
+const MENU_VERSION = '2026.10.29_v2';
+
 const initialMenuData = [
-  // BROASTED
   {
-    id: 'b1',
-    category: 'broasted',
-    emoji: '🍗',
-    image: '',
-    tag: 'Signature',
-    price: '150,000 S.P.',
-    nameEn: 'Fried Chicken',
-    nameAr: 'فروج بروستد كامل',
-    descEn: 'Whole broasted chicken — golden, crispy, juicy',
-    descAr: 'فروج بروستد كامل - مقرمش ولذيذ'
+    "id": "b1",
+    "category": "broasted",
+    "emoji": "🍗",
+    "image": "",
+    "tag": "Signature",
+    "price": "120,000 S.P.",
+    "nameEn": "Fried Chicken",
+    "nameAr": "فروج بروستد كامل",
+    "descEn": "Whole broasted chicken + garlic · spicy garlic · pickle · bread · cola",
+    "descAr": "فروج بروستد كامل + ثوم، ثوم سبايسي، مخلل، خبز، كولا"
   },
   {
-    id: 'b2',
-    category: 'broasted',
-    emoji: '🍗',
-    image: '',
-    tag: '',
-    price: '80,000 S.P.',
-    nameEn: 'Half Fried Chicken',
-    nameAr: 'نصف فروج بروستد',
-    descEn: 'Half broasted — perfect for one',
-    descAr: 'نصف فروج بروستد - مثالي لشخص واحد'
+    "id": "b2",
+    "category": "broasted",
+    "emoji": "🍗",
+    "image": "",
+    "tag": "",
+    "price": "65,000 S.P.",
+    "nameEn": "Half Fried Chicken",
+    "nameAr": "نصف فروج بروستد",
+    "descEn": "Half broasted + garlic · spicy garlic · pickle · bread · cola",
+    "descAr": "نصف فروج بروستد + ثوم، ثوم سبايسي، مخلل، خبز، كولا"
   },
   {
-    id: 'b3',
-    category: 'broasted',
-    emoji: '🍖',
-    image: '',
-    tag: 'Popular',
-    price: '95,000 S.P.',
-    nameEn: 'Crispy Drumsticks',
-    nameAr: 'وجبة دبابيس كريسبي',
-    descEn: 'Meal + garlic · saba · pickle · bread · cola',
-    descAr: 'وجبة دبابيس كريسبي + ثومية، بطاطا، مخلل، خبز'
+    "id": "b3",
+    "category": "broasted",
+    "emoji": "🍖",
+    "image": "",
+    "tag": "Popular",
+    "price": "40,000 S.P.",
+    "nameEn": "Crispy Drumsticks",
+    "nameAr": "وجبة دبابيس كريسبي",
+    "descEn": "Meal + garlic · spicy garlic · pickle · bread · cola",
+    "descAr": "وجبة دبابيس كريسبي + ثوم، ثوم سبايسي، مخلل، خبز، كولا"
   },
   {
-    id: 'b4',
-    category: 'broasted',
-    emoji: '🍗',
-    image: '',
-    tag: '',
-    price: '70,000 S.P.',
-    nameEn: 'Buffalo Wings',
-    nameAr: 'جوانح بوفالو',
-    descEn: 'Meal + garlic · saba · pickle · bread · cola',
-    descAr: 'وجبة جوانح بوفالو + ثومية، بطاطا، مخلل، خبز'
-  },
-  // SANDWICHES
-  {
-    id: 's1',
-    category: 'sandwiches',
-    emoji: '🥪',
-    image: '',
-    tag: 'Fan Fave',
-    price: '40,000 S.P.',
-    nameEn: 'Crispy',
-    nameAr: 'ساندويش كريسبي',
-    descEn: 'Chicken · cocktail sauce · cheddar · coleslaw · lettuce',
-    descAr: 'دجاج، صلصة كوكتيل، جبنة شيدر، كولسلو، خس'
+    "id": "b4",
+    "category": "broasted",
+    "emoji": "🍗",
+    "image": "",
+    "tag": "",
+    "price": "30,000 S.P.",
+    "nameEn": "Buffalo Wings",
+    "nameAr": "وجبة جوانح بوفالو",
+    "descEn": "Meal + garlic · spicy garlic · pickle · bread · cola",
+    "descAr": "وجبة جوانح بوفالو + ثوم، ثوم سبايسي، مخلل، خبز، كولا"
   },
   {
-    id: 's2',
-    category: 'sandwiches',
-    emoji: '🌶️',
-    image: '',
-    tag: '',
-    price: '45,000 S.P.',
-    nameEn: 'Zinger',
-    nameAr: 'ساندويش زنجر',
-    descEn: 'Chicken · dynamite sauce · cheddar · coleslaw · lettuce',
-    descAr: 'دجاج، صلصة ديناميت، جبنة شيدر، كولسلو، خس'
+    "id": "s1",
+    "category": "sandwiches",
+    "emoji": "🥪",
+    "image": "",
+    "tag": "Fan Fave",
+    "price": "35,000 S.P.",
+    "nameEn": "Crispy",
+    "nameAr": "ساندويش كريسبي",
+    "descEn": "Chicken · cocktail sauce · cheddar · coleslaw · lettuce",
+    "descAr": "دجاج، صلصة كوكتيل، جبنة شيدر، كولسلو، خس"
   },
   {
-    id: 's3',
-    category: 'sandwiches',
-    emoji: '🥪',
-    image: '',
-    tag: 'Signature',
-    price: '45,000 S.P.',
-    nameEn: 'Chickenji Escalope',
-    nameAr: 'إسكالوب تشيكنجي',
-    descEn: 'Chicken · chickenji sauce · coleslaw · lettuce',
-    descAr: 'دجاج، صلصة تشيكنجي الخاصة، كولسلو، خس'
+    "id": "s2",
+    "category": "sandwiches",
+    "emoji": "🌶️",
+    "image": "",
+    "tag": "",
+    "price": "35,000 S.P.",
+    "nameEn": "Zinger",
+    "nameAr": "ساندويش زنجر",
+    "descEn": "Chicken · dynamite sauce · cheddar · coleslaw · lettuce",
+    "descAr": "دجاج، صلصة ديناميت، جبنة شيدر، كولسلو، خس"
   },
   {
-    id: 's4',
-    category: 'sandwiches',
-    emoji: '🌮',
-    image: '',
-    tag: '',
-    price: '50,000 S.P.',
-    nameEn: 'Fajita',
-    nameAr: 'ساندويش فاهيتا',
-    descEn: 'Chicken · mozzarella · garlic · mushroom · corn',
-    descAr: 'دجاج، جبنة موزاريلا، ثوم، فطر، ذرة'
+    "id": "s3",
+    "category": "sandwiches",
+    "emoji": "🥪",
+    "image": "",
+    "tag": "Signature",
+    "price": "35,000 S.P.",
+    "nameEn": "Chickenji Escalope",
+    "nameAr": "إسكالوب تشيكنجي",
+    "descEn": "Chicken · chickenji sauce · coleslaw · lettuce",
+    "descAr": "دجاج، صلصة تشيكنجي الخاصة، كولسلو، خس"
   },
   {
-    id: 's5',
-    category: 'sandwiches',
-    emoji: '🌶️',
-    image: '',
-    tag: '',
-    price: '50,000 S.P.',
-    nameEn: 'Mexicano',
-    nameAr: 'ساندويش مكسيكانو',
-    descEn: 'Spicy chicken · mozzarella · saba · mushroom · corn',
-    descAr: 'دجاج حار، جبنة موزاريلا، ثومية، فطر، ذرة'
+    "id": "s4",
+    "category": "sandwiches",
+    "emoji": "🌮",
+    "image": "",
+    "tag": "",
+    "price": "35,000 S.P.",
+    "nameEn": "Fajita",
+    "nameAr": "ساندويش فاهيتا",
+    "descEn": "Chicken · mozzarella · garlic · mushroom · corn",
+    "descAr": "دجاج، جبنة موزاريلا، ثوم، فطر، ذرة"
   },
   {
-    id: 's6',
-    category: 'sandwiches',
-    emoji: '🧀',
-    image: '',
-    tag: 'Best Seller',
-    price: '65,000 S.P.',
-    nameEn: 'Crunchy Chickenji',
-    nameAr: 'كرانشي تشيكنجي أسطوري',
-    descEn: 'Double chicken · cheddar · mozzarella · sticks · chickenji sauce · coleslaw · lettuce · tomato',
-    descAr: 'دجاج مضاعف، جبنة شيدر وموزاريلا، أصابع موزاريلا، صلصة تشيكنجي، كولسلو، خس، طماطم'
+    "id": "s5",
+    "category": "sandwiches",
+    "emoji": "🌶️",
+    "image": "",
+    "tag": "",
+    "price": "35,000 S.P.",
+    "nameEn": "Mexicano",
+    "nameAr": "ساندويش مكسيكانو",
+    "descEn": "Spicy chicken · mozzarella · spicy garlic · mushroom · corn",
+    "descAr": "دجاج حار، جبنة موزاريلا، ثومية حارة، فطر، ذرة"
   },
   {
-    id: 's7',
-    category: 'sandwiches',
-    emoji: '🥔',
-    image: '',
-    tag: '',
-    price: '30,000 S.P.',
-    nameEn: 'Potato Cheese',
-    nameAr: 'ساندويش بطاطا بالجبنة',
-    descEn: 'Potato · mozzarella · mayo · coleslaw · ketchup',
-    descAr: 'بطاطا، جبنة موزاريلا، مايونيز، كولسلو، كاتشب'
+    "id": "s6",
+    "category": "sandwiches",
+    "emoji": "🧀",
+    "image": "",
+    "tag": "Best Seller",
+    "price": "50,000 S.P.",
+    "nameEn": "Crunchy Chickenji",
+    "nameAr": "كرانشي تشيكنجي أسطوري",
+    "descEn": "Double chicken · cheddar · mozzarella sticks · chickenji sauce · coleslaw · lettuce · tomato",
+    "descAr": "دجاج مضاعف، جبنة شيدر، أصابع موزاريلا، صلصة تشيكنجي، كولسلو، خس، طماطم"
   },
   {
-    id: 's8',
-    category: 'sandwiches',
-    emoji: '🧀',
-    image: '',
-    tag: '',
-    price: '50,000 S.P.',
-    nameEn: 'Shish Cheese',
-    nameAr: 'شيش بالجبنة',
-    descEn: 'Chicken · mozzarella · garlic · cream sauce',
-    descAr: 'دجاج، جبنة موزاريلا، ثوم، صلصة الكريمة'
+    "id": "s7",
+    "category": "sandwiches",
+    "emoji": "🥔",
+    "image": "",
+    "tag": "",
+    "price": "17,000 S.P.",
+    "nameEn": "Potato Cheese",
+    "nameAr": "ساندويش بطاطا بالجبنة",
+    "descEn": "Potato · mozzarella · mayo · coleslaw · ketchup",
+    "descAr": "بطاطا، جبنة موزاريلا، مايونيز، كولسلو، كاتشب"
   },
   {
-    id: 's9',
-    category: 'sandwiches',
-    emoji: '🍗',
-    image: '',
-    tag: '',
-    price: '48,000 S.P.',
-    nameEn: 'Crunchy Chicken',
-    nameAr: 'ساندويش كرانشي دجاج',
-    descEn: 'Chicken · cheddar · cocktail · coleslaw · lettuce',
-    descAr: 'دجاج، جبنة شيدر، صلصة كوكتيل، كولسلو، خس'
-  },
-  // WESTERN
-  {
-    id: 'w1',
-    category: 'western',
-    emoji: '🍟',
-    image: '',
-    tag: '',
-    price: '110,000 S.P.',
-    nameEn: 'Crispy Meal',
-    nameAr: 'وجبة كريسبي',
-    descEn: 'Chicken · fries · coleslaw · sauce · pickle',
-    descAr: 'دجاج، بطاطا، كولسلو، صلصة، مخلل'
+    "id": "s8",
+    "category": "sandwiches",
+    "emoji": "🧀",
+    "image": "",
+    "tag": "",
+    "price": "35,000 S.P.",
+    "nameEn": "Shish Cheese",
+    "nameAr": "شيش بالجبنة",
+    "descEn": "Chicken · potato · mozzarella · garlic · cream sauce",
+    "descAr": "دجاج، بطاطا، جبنة موزاريلا، ثوم، صوص كريمي"
   },
   {
-    id: 'w2',
-    category: 'western',
-    emoji: '🍟',
-    image: '',
-    tag: '',
-    price: '115,000 S.P.',
-    nameEn: 'Zinger Meal',
-    nameAr: 'وجبة زنجر',
-    descEn: 'Chicken · fries · coleslaw · sauce · pickle',
-    descAr: 'دجاج، بطاطا، كولسلو، صلصة، مخلل'
+    "id": "s9",
+    "category": "sandwiches",
+    "emoji": "🍗",
+    "image": "",
+    "tag": "",
+    "price": "35,000 S.P.",
+    "nameEn": "Crunchy Chicken",
+    "nameAr": "ساندويش كرانشي دجاج",
+    "descEn": "Chicken · cheddar · cocktail sauce · coleslaw · lettuce",
+    "descAr": "دجاج، جبنة شيدر، صوص كوكتيل، كولسلو، خس"
   },
   {
-    id: 'w3',
-    category: 'western',
-    emoji: '🧀',
-    image: '',
-    tag: 'Special',
-    price: '120,000 S.P.',
-    nameEn: 'Chickenji Escalope Meal',
-    nameAr: 'وجبة إسكالوب تشيكنجي',
-    descEn: 'Chicken · mozzarella · coleslaw · chickenji sauce · pickle',
-    descAr: 'دجاج، جبنة موزاريلا، كولسلو، صلصة تشيكنجي، مخلل'
+    "id": "w1",
+    "category": "western",
+    "emoji": "🍟",
+    "image": "",
+    "tag": "",
+    "price": "65,000 S.P.",
+    "nameEn": "Crispy Meal",
+    "nameAr": "وجبة كريسبي",
+    "descEn": "Chicken · fries · coleslaw · sauce · pickle",
+    "descAr": "دجاج، بطاطا، كولسلو، صوص، مخلل"
   },
   {
-    id: 'w4',
-    category: 'western',
-    emoji: '🌮',
-    image: '',
-    tag: '',
-    price: '120,000 S.P.',
-    nameEn: 'Fajita Meal',
-    nameAr: 'وجبة فاهيتا',
-    descEn: 'Chicken · fries · coleslaw · sauce · pickle',
-    descAr: 'دجاج، بطاطا، كولسلو، صلصة، مخلل'
+    "id": "w2",
+    "category": "western",
+    "emoji": "🍟",
+    "image": "",
+    "tag": "",
+    "price": "65,000 S.P.",
+    "nameEn": "Zinger Meal",
+    "nameAr": "وجبة زنجر",
+    "descEn": "Chicken · fries · coleslaw · sauce · pickle",
+    "descAr": "دجاج، بطاطا، كولسلو، صوص، مخلل"
   },
   {
-    id: 'w5',
-    category: 'western',
-    emoji: '🌶️',
-    image: '',
-    tag: '',
-    price: '120,000 S.P.',
-    nameEn: 'Mexicano Meal',
-    nameAr: 'وجبة مكسيكانو',
-    descEn: 'Chicken · fries · coleslaw · sauce · pickle',
-    descAr: 'دجاج، بطاطا، كولسلو، صلصة، مخلل'
+    "id": "w3",
+    "category": "western",
+    "emoji": "🧀",
+    "image": "",
+    "tag": "Special",
+    "price": "70,000 S.P.",
+    "nameEn": "Chickenji Escalope Meal",
+    "nameAr": "وجبة إسكالوب تشيكنجي",
+    "descEn": "Chicken · mozzarella · coleslaw · chickenji sauce · pickle",
+    "descAr": "دجاج، جبنة موزاريلا، كولسلو، صلصة تشيكنجي، مخلل"
   },
   {
-    id: 'w6',
-    category: 'western',
-    emoji: '🍿',
-    image: '',
-    tag: '',
-    price: '100,000 S.P.',
-    nameEn: 'Chicken Pop Corn',
-    nameAr: 'وجبة بوب كورن الدجاج',
-    descEn: 'Chicken · fries · coleslaw · sauce · pickle',
-    descAr: 'دجاج، بطاطا، كولسلو، صلصة، مخلل'
+    "id": "w4",
+    "category": "western",
+    "emoji": "🌮",
+    "image": "",
+    "tag": "",
+    "price": "65,000 S.P.",
+    "nameEn": "Fajita Meal",
+    "nameAr": "وجبة فاهيتا",
+    "descEn": "Chicken · fries · coleslaw · sauce · pickle",
+    "descAr": "دجاج، بطاطا، كولسلو، صوص، مخلل"
   },
   {
-    id: 'w7',
-    category: 'western',
-    emoji: '⭐',
-    image: '',
-    tag: 'Special',
-    price: '115,000 S.P.',
-    nameEn: 'Maria Chickenji',
-    nameAr: 'ماريا تشيكنجي',
-    descEn: 'Chicken · mozzarella · chickenji sauce · coleslaw',
-    descAr: 'دجاج، جبنة موزاريلا، صلصة تشيكنجي، كولسلو'
+    "id": "w5",
+    "category": "western",
+    "emoji": "🌶️",
+    "image": "",
+    "tag": "",
+    "price": "65,000 S.P.",
+    "nameEn": "Mexicano Meal",
+    "nameAr": "وجبة مكسيكانو",
+    "descEn": "Chicken · fries · coleslaw · sauce · pickle",
+    "descAr": "دجاج، بطاطا، كولسلو، صوص، مخلل"
   },
   {
-    id: 'w8',
-    category: 'western',
-    emoji: '🧀',
-    image: '',
-    tag: '',
-    price: '120,000 S.P.',
-    nameEn: 'Shish & Cheese Meal',
-    nameAr: 'وجبة شيش بالجبنة',
-    descEn: 'Chicken · mozzarella · fries · coleslaw · sauce · pickle',
-    descAr: 'دجاج، جبنة موزاريلا، بطاطا، كولسلو، صلصة، مخلل'
-  },
-  // BOOM
-  {
-    id: 'bo1',
-    category: 'boom',
-    emoji: '💥',
-    image: '',
-    tag: 'Boom!',
-    price: '130,000 S.P.',
-    nameEn: 'Crispy Boom',
-    nameAr: 'كريسبي بووم',
-    descEn: 'Chicken & fries mix · mozzarella · special boom sauce',
-    descAr: 'خلطة الدجاج والبطاطا، جبنة موزاريلا، صلصة بووم الخاصة'
+    "id": "w6",
+    "category": "western",
+    "emoji": "🍿",
+    "image": "",
+    "tag": "",
+    "price": "60,000 S.P.",
+    "nameEn": "Chicken Pop Corn",
+    "nameAr": "وجبة بوب كورن الدجاج",
+    "descEn": "Chicken · fries · coleslaw · sauce · pickle",
+    "descAr": "دجاج، بطاطا، كولسلو، صوص، مخلل"
   },
   {
-    id: 'bo2',
-    category: 'boom',
-    emoji: '💥',
-    image: '',
-    tag: '',
-    price: '130,000 S.P.',
-    nameEn: 'Escalope Boom',
-    nameAr: 'إسكالوب بووم',
-    descEn: 'Chicken & fries mix · mozzarella · special boom sauce',
-    descAr: 'خلطة الدجاج والبطاطا، جبنة موزاريلا، صلصة بووم الخاصة'
+    "id": "w7",
+    "category": "western",
+    "emoji": "⭐",
+    "image": "",
+    "tag": "Special",
+    "price": "70,000 S.P.",
+    "nameEn": "Maria Chickenji",
+    "nameAr": "ماريا تشيكنجي",
+    "descEn": "Chicken · mozzarella · chickenji sauce · coleslaw",
+    "descAr": "دجاج، جبنة موزاريلا، صلصة تشيكنجي، كولسلو"
   },
   {
-    id: 'bo3',
-    category: 'boom',
-    emoji: '💥',
-    image: '',
-    tag: '',
-    price: '135,000 S.P.',
-    nameEn: 'Fajita Boom',
-    nameAr: 'فاهيتا بووم',
-    descEn: 'Chicken & fries mix · mozzarella · special boom sauce',
-    descAr: 'خلطة الدجاج والبطاطا، جبنة موزاريلا، صلصة بووم الخاصة'
+    "id": "w8",
+    "category": "western",
+    "emoji": "🧀",
+    "image": "",
+    "tag": "",
+    "price": "70,000 S.P.",
+    "nameEn": "Shish & Cheese Meal",
+    "nameAr": "وجبة شيش بالجبنة",
+    "descEn": "Chicken · mozzarella · fries · coleslaw · sauce · pickle",
+    "descAr": "دجاج، جبنة موزاريلا، بطاطا، كولسلو، صوص، مخلل"
   },
   {
-    id: 'bo4',
-    category: 'boom',
-    emoji: '💥',
-    image: '',
-    tag: '',
-    price: '135,000 S.P.',
-    nameEn: 'Mexicano Boom',
-    nameAr: 'مكسيكانو بووم',
-    descEn: 'Chicken & fries mix · mozzarella · special boom sauce',
-    descAr: 'خلطة الدجاج والبطاطا، جبنة موزاريلا، صلصة بووم الخاصة'
-  },
-  // SIDES
-  {
-    id: 'sd1',
-    category: 'sides',
-    emoji: '🍝',
-    image: '',
-    tag: '',
-    price: '85,000 S.P.',
-    nameEn: 'Pasta',
-    nameAr: 'باستا',
-    descEn: 'Samba · Chicken · Crunchy · Sausage',
-    descAr: 'سامبا، دجاج، كرانشي، سجق'
+    "id": "bo1",
+    "category": "boom",
+    "emoji": "💥",
+    "image": "",
+    "tag": "Boom!",
+    "price": "30,000 S.P.",
+    "nameEn": "Crispy Boom",
+    "nameAr": "كريسبي بووم",
+    "descEn": "Chicken & fries mix · mozzarella · special boom sauce",
+    "descAr": "خلطة الدجاج والبطاطا، جبنة موزاريلا، صلصة بووم الخاصة"
   },
   {
-    id: 'sd2',
-    category: 'sides',
-    emoji: '🥔',
-    image: '',
-    tag: '',
-    price: '75,000 S.P.',
-    nameEn: 'Loaded Potatoes',
-    nameAr: 'بطاطا لودد تشيكنجي',
-    descEn: 'Cheese fries · Creamy · Dynamite · Chickenji style',
-    descAr: 'بطاطا بالجبنة، كريمة، ديناميت، على طريقة تشيكنجي'
+    "id": "bo2",
+    "category": "boom",
+    "emoji": "💥",
+    "image": "",
+    "tag": "",
+    "price": "30,000 S.P.",
+    "nameEn": "Escalope Boom",
+    "nameAr": "إسكالوب بووم",
+    "descEn": "Chicken & fries mix · mozzarella · special boom sauce",
+    "descAr": "خلطة الدجاج والبطاطا، جبنة موزاريلا، صلصة بووم الخاصة"
   },
   {
-    id: 'sd3',
-    category: 'sides',
-    emoji: '🧀',
-    image: '',
-    tag: '',
-    price: '60,000 S.P.',
-    nameEn: 'Mozzarella Sticks',
-    nameAr: 'أصابع موزاريلا',
-    descEn: 'Golden fried mozzarella sticks',
-    descAr: 'أصابع موزاريلا ذهبية مقلية'
+    "id": "bo3",
+    "category": "boom",
+    "emoji": "💥",
+    "image": "",
+    "tag": "",
+    "price": "30,000 S.P.",
+    "nameEn": "Fajita Boom",
+    "nameAr": "فاهيتا بووم",
+    "descEn": "Chicken & fries mix · mozzarella · special boom sauce",
+    "descAr": "خلطة الدجاج والبطاطا، جبنة موزاريلا، صلصة بووم الخاصة"
   },
   {
-    id: 'sd4',
-    category: 'sides',
-    emoji: '🥗',
-    image: '',
-    tag: '',
-    price: '55,000 S.P.',
-    nameEn: 'Salads',
-    nameAr: 'سلطات متنوعة',
-    descEn: 'Poutine Bowl · Macaroni · Chicken Caesar · Coleslaw · Corn',
-    descAr: 'بوتين بول، معكرونة، سيزر الدجاج، كولسلو، ذرة'
+    "id": "bo4",
+    "category": "boom",
+    "emoji": "💥",
+    "image": "",
+    "tag": "",
+    "price": "30,000 S.P.",
+    "nameEn": "Mexicano Boom",
+    "nameAr": "مكسيكانو بووم",
+    "descEn": "Chicken & fries mix · mozzarella · special boom sauce",
+    "descAr": "خلطة الدجاج والبطاطا، جبنة موزاريلا، صلصة بووم الخاصة"
+  },
+  {
+    "id": "sd1",
+    "category": "sides",
+    "emoji": "🍝",
+    "image": "",
+    "tag": "",
+    "price": "25,000 S.P.",
+    "nameEn": "Pasta",
+    "nameAr": "باستا تشيكنجي",
+    "descEn": "Chicken · Crunchy · Sausage · Simple Pasta",
+    "descAr": "تشكن، كرانشي، سجق، سمبل باستا"
+  },
+  {
+    "id": "sd2",
+    "category": "sides",
+    "emoji": "🥔",
+    "image": "",
+    "tag": "",
+    "price": "25,000 S.P.",
+    "nameEn": "Loaded Potatoes",
+    "nameAr": "بطاطا لودد تشيكنجي",
+    "descEn": "Cheese fries (17k) · Creamy · Dynamite · Chickenji style",
+    "descAr": "بطاطا تشيز (١٧ ألف)، كريمي، داينمايت، على طريقة تشيكنجي"
+  },
+  {
+    "id": "sd3",
+    "category": "sides",
+    "emoji": "🧀",
+    "image": "",
+    "tag": "",
+    "price": "15,000 S.P.",
+    "nameEn": "Mozzarella Sticks",
+    "nameAr": "أصابع موزاريلا",
+    "descEn": "Golden fried crispy mozzarella sticks",
+    "descAr": "أصابع موزاريلا ذهبية مقلية"
+  },
+  {
+    "id": "sd4",
+    "category": "sides",
+    "emoji": "🥗",
+    "image": "",
+    "tag": "",
+    "price": "25,000 S.P.",
+    "nameEn": "Salads & Appetizers",
+    "nameAr": "سلطات ومقبلات",
+    "descEn": "Coleslaw (15k) · Potato Bowl (17k) · Corn · Macaroni · Caesar",
+    "descAr": "سلطة كولسلو (١٥ ألف)، بوتيتو بول (١٧ ألف)، ذرة، معكرونة، سيزر"
   }
 ];
 
 let menuItems;
 try {
+  const savedVersion = localStorage.getItem('chickenji_menu_version');
   const savedMenu = localStorage.getItem('chickenji_menu');
-  menuItems = (savedMenu && savedMenu !== 'undefined') ? JSON.parse(savedMenu) : initialMenuData;
-  if (!Array.isArray(menuItems)) {
+  
+  // Auto-invalidation: if code has a new version or no stored data, flush stale cache immediately
+  if (savedVersion !== MENU_VERSION || !savedMenu || savedMenu === 'undefined') {
     menuItems = initialMenuData;
+    localStorage.setItem('chickenji_menu', JSON.stringify(initialMenuData));
+    localStorage.setItem('chickenji_menu_version', MENU_VERSION);
+  } else {
+    menuItems = JSON.parse(savedMenu);
+    if (!Array.isArray(menuItems) || menuItems.length === 0) {
+      menuItems = initialMenuData;
+      localStorage.setItem('chickenji_menu', JSON.stringify(initialMenuData));
+      localStorage.setItem('chickenji_menu_version', MENU_VERSION);
+    }
   }
 } catch (err) {
   menuItems = initialMenuData;
@@ -877,20 +896,29 @@ function closeAdminPasscode() {
 
 // Helper to compute SHA-256 hash securely on client-side (requires secure context/HTTPS)
 async function sha256(message) {
-  const msgBuffer = new TextEncoder().encode(message);
-  const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
-  const hashArray = Array.from(new Uint8Array(hashBuffer));
-  const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-  return hashHex;
+  try {
+    if (window.crypto && window.crypto.subtle) {
+      const msgBuffer = new TextEncoder().encode(message);
+      const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+  } catch (e) {}
+  if (message === '1234') return '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4';
+  let h = 0;
+  for (let i = 0; i < message.length; i++) {
+    h = ((h << 5) - h) + message.charCodeAt(i);
+    h |= 0;
+  }
+  return 'fallback_' + Math.abs(h).toString(16);
 }
 
 async function submitPasscode() {
   const code = document.getElementById('adminPasscode').value;
   const hashedInput = await sha256(code);
-  // Default '1234' hash: '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4'
   const savedHash = localStorage.getItem('chickenji_admin_password_hash') || '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4';
   
-  if (hashedInput === savedHash) {
+  if (hashedInput === savedHash || (code === '1234' && !localStorage.getItem('chickenji_admin_password_hash'))) {
     isAuthenticated = true;
     sessionStorage.setItem('chickenji_admin_authed', 'true');
     closeAdminPasscode();
@@ -1156,6 +1184,19 @@ function clearImageUpload() {
   document.getElementById('imagePreviewContainer').style.display = 'none';
 }
 
+function showAdminToast(msg) {
+  let toast = document.getElementById('adminToast');
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.id = 'adminToast';
+    toast.className = 'admin-toast';
+    document.body.appendChild(toast);
+  }
+  toast.textContent = msg;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 6000);
+}
+
 function saveAdminItem(e) {
   if (e) e.preventDefault();
   
@@ -1188,9 +1229,16 @@ function saveAdminItem(e) {
       menuItems.push({ id: newId, category, emoji, image, tag, price, nameEn, nameAr, descEn, descAr });
     }
     
+    // Save locally with updated custom version
+    const updatedVersion = 'custom_' + Date.now();
     localStorage.setItem('chickenji_menu', JSON.stringify(menuItems));
+    localStorage.setItem('chickenji_menu_version', updatedVersion);
     closeAdminItem();
     renderMenu();
+    
+    showAdminToast(currentLang === 'ar' ? 
+      '✅ تم حفظ التعديل محلياً! اضغط على "📥 حفظ وتحميل HTML" من الشريط العلوي لتطبيق التعديلات بشكل دائم.' : 
+      '✅ Saved locally! Click "📥 Save & Download HTML" in the top bar to apply changes permanently.');
   } catch (err) {
     if (err.name === 'QuotaExceededError' || err.code === 22) {
       alert(currentLang === 'ar' ? 
@@ -1209,9 +1257,12 @@ function deleteAdminItem() {
   const confirmMsg = currentLang === 'ar' ? 'هل أنت متأكد من حذف هذا الصنف؟' : 'Are you sure you want to delete this item?';
   if (confirm(confirmMsg)) {
     menuItems = menuItems.filter(item => item.id !== id);
+    const updatedVersion = 'custom_' + Date.now();
     localStorage.setItem('chickenji_menu', JSON.stringify(menuItems));
+    localStorage.setItem('chickenji_menu_version', updatedVersion);
     closeAdminItem();
     renderMenu();
+    showAdminToast(currentLang === 'ar' ? 'تم حذف الصنف.' : 'Item deleted.');
   }
 }
 
@@ -1220,7 +1271,64 @@ function resetMenuToDefault() {
   if (confirm(confirmMsg)) {
     menuItems = [...initialMenuData];
     localStorage.setItem('chickenji_menu', JSON.stringify(menuItems));
+    localStorage.setItem('chickenji_menu_version', MENU_VERSION);
     renderMenu();
+    showAdminToast(currentLang === 'ar' ? 'تمت استعادة القائمة الافتراضية.' : 'Default menu restored.');
+  }
+}
+
+function clearCacheAndReset() {
+  const confirmMsg = currentLang === 'ar' ? 'هل تريد مسح التخزين المؤقت وإعادة تحميل القائمة الافتراضية المحدثة؟' : 'Clear cache and reload latest default menu?';
+  if (confirm(confirmMsg)) {
+    localStorage.removeItem('chickenji_menu');
+    localStorage.removeItem('chickenji_menu_version');
+    location.reload();
+  }
+}
+
+function exportMenuJSON() {
+  const blob = new Blob([JSON.stringify(menuItems, null, 2)], { type: 'application/json;charset=utf-8' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'menu.json';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(a.href);
+}
+
+function downloadUpdatedHTML() {
+  try {
+    // Generate clean HTML based on document
+    let fullHtml = document.documentElement.outerHTML;
+    
+    // Embed current menuItems into initialMenuData
+    const newVersion = '2026.10.29_' + Date.now();
+    const menuCode = 'const initialMenuData = ' + JSON.stringify(menuItems, null, 2) + ';';
+    
+    fullHtml = fullHtml.replace(/const\s+initialMenuData\s*=\s*\[[\s\S]*?\];/m, menuCode);
+    fullHtml = fullHtml.replace(/const\s+MENU_VERSION\s*=\s*['"][^'"]*['"];/m, `const MENU_VERSION = '${newVersion}';`);
+    
+    // Clean admin-active and open states
+    fullHtml = fullHtml.replace(/\badmin-active\b/g, '');
+    fullHtml = fullHtml.replace(/\s*class="\s*open\s*"/g, '');
+    
+    const docString = '<!DOCTYPE html>\n<html' + fullHtml.substring(fullHtml.indexOf('<html') + 5);
+    
+    const blob = new Blob([docString], { type: 'text/html;charset=utf-8' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'index.html';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(a.href);
+    
+    alert(currentLang === 'ar' ? 
+      'تم تحميل ملف index.html المحدث بنجاح! يمكنك استبدال الملف في مجلد الموقع أو رفعه إلى GitHub لنشر الأسعار والتعديلات لجميع الزوار فوراً وبدون أي كاش قديم.' : 
+      'Updated index.html downloaded successfully! Replace the file in your website folder or commit to GitHub to publish the updated prices to all visitors without stale cache.');
+  } catch (err) {
+    alert('Error generating updated HTML: ' + err.message);
   }
 }
 
