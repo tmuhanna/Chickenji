@@ -11,6 +11,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Space+Mono:wght@400;700&family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="index.css" />
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 </head>
 <body>
 
@@ -256,11 +257,71 @@
   <div class="admin-bar-content">
     <span class="admin-bar-title">⚡ ADMIN MODE ACTIVE</span>
     <div class="admin-bar-actions">
+      <button class="admin-btn admin-btn-primary" onclick="openAdminExcelModal()" title="Upload prices from Excel sheet (.xlsx, .xls, .csv)">📊 Upload Excel</button>
       <button class="admin-btn admin-btn-download" onclick="downloadUpdatedHTML()" title="Download updated index.html with all latest prices and changes baked in">📥 Save &amp; Download HTML</button>
       <button class="admin-btn admin-btn-secondary" onclick="exportMenuJSON()" title="Export menu as JSON">📋 Export JSON</button>
       <button class="admin-btn admin-btn-danger" onclick="clearCacheAndReset()" title="Clear cached prices and reload latest default menu">🔄 Clear Cache &amp; Reset</button>
       <button class="admin-btn admin-btn-secondary" onclick="openChangePasswordModal()">🔑 Change Passcode</button>
       <button class="admin-btn admin-btn-secondary" onclick="toggleAdminMode()">✕ Exit</button>
+    </div>
+  </div>
+</div>
+
+<!-- Admin Excel Price Upload Overlay -->
+<div class="admin-overlay" id="adminExcelOverlay">
+  <div class="admin-modal" style="max-width: 680px; text-align: left;">
+    <button class="admin-modal-close" onclick="closeAdminExcel()">&times;</button>
+    <h3 style="text-align: center; margin-bottom: 0.3rem;">Update Prices from <span class="y">Excel</span></h3>
+    <p style="text-align: center; font-size: 0.8rem; color: var(--muted); margin-bottom: 1.2rem; font-family: var(--ff-mono);">
+      Upload your pricing spreadsheet (.xlsx, .xls, .csv) or download the current template.
+    </p>
+
+    <div style="display: flex; gap: 0.8rem; margin-bottom: 1.2rem; flex-wrap: wrap;">
+      <button type="button" class="admin-btn admin-btn-secondary" onclick="downloadPricingTemplate()" style="flex: 1; padding: 0.7rem 0.5rem; text-align: center;">
+        📥 Download Excel Template
+      </button>
+      <button type="button" class="admin-btn admin-btn-primary" onclick="document.getElementById('excelFileInput').click()" style="flex: 1; padding: 0.7rem 0.5rem; text-align: center;">
+        📂 Select Excel File (.xlsx)
+      </button>
+      <input type="file" id="excelFileInput" accept=".xlsx,.xls,.csv" onchange="handleExcelUpload(event)" style="display: none;" />
+    </div>
+
+    <!-- Drag & drop zone -->
+    <div id="excelDropZone" class="excel-dropzone" onclick="document.getElementById('excelFileInput').click()">
+      <div style="font-size: 2.2rem; margin-bottom: 0.4rem;">📊</div>
+      <div style="font-size: 0.88rem; font-weight: 700; color: #fff;">Click or drag &amp; drop Excel file here</div>
+      <div style="font-size: 0.72rem; color: var(--muted); margin-top: 4px;">Supports Menu Pricing.xlsx, custom spreadsheets (.xlsx, .xls), and .csv</div>
+    </div>
+
+    <!-- Live Preview Box (hidden by default) -->
+    <div id="excelPreviewContainer" style="display: none; margin-top: 1.2rem;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.6rem; flex-wrap: wrap; gap: 0.5rem;">
+        <h4 style="font-size: 0.82rem; color: var(--y); font-family: var(--ff-mono); margin: 0;">
+          Preview Updates (<span id="excelMatchCount">0</span> matched &bull; <span id="excelChangedCount" style="color: #33ff33;">0</span> changed)
+        </h4>
+        <span id="excelFileLabel" style="font-size: 0.7rem; color: var(--muted); font-family: var(--ff-mono);"></span>
+      </div>
+      <div class="excel-preview-scroll">
+        <table class="excel-preview-table">
+          <thead>
+            <tr>
+              <th>Item</th>
+              <th>Category</th>
+              <th>Current Price</th>
+              <th>New Price</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="excelPreviewTableBody">
+            <!-- Rows injected dynamically -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="admin-btn-row" style="margin-top: 1.2rem;">
+      <button type="button" id="applyExcelBtn" class="admin-btn admin-btn-primary" style="display: none;" onclick="applyExcelPrices()">Apply New Prices</button>
+      <button type="button" class="admin-btn admin-btn-secondary" onclick="closeAdminExcel()">Close</button>
     </div>
   </div>
 </div>
@@ -281,8 +342,10 @@
     </div>
     <div style="color: var(--r); font-size: 0.75rem; margin-top: -0.5rem; margin-bottom: 1rem; display: none;" id="passcodeError">Invalid passcode!</div>
     <button class="admin-btn admin-btn-primary" style="width: 100%;" onclick="submitPasscode()">Verify</button>
-    <div style="margin-top: 15px; text-align: center;">
-      <a href="#" onclick="showRecoveryQuestion()" id="forgotPasscodeLink" style="color: var(--y); font-size: 0.65rem; text-decoration: none; font-family: var(--ff-mono); text-transform: uppercase; letter-spacing: 1px;">Forgot Passcode?</a>
+    <div style="margin-top: 18px; text-align: center; display: flex; justify-content: center; align-items: center; gap: 12px;">
+      <a href="#" onclick="showRecoveryQuestion()" id="forgotPasscodeLink" style="color: var(--y); font-size: 0.68rem; text-decoration: none; font-family: var(--ff-mono); text-transform: uppercase; letter-spacing: 1px;">Forgot Passcode?</a>
+      <span style="color: rgba(255,255,255,0.25);">|</span>
+      <a href="#" onclick="closeAdminPasscode(); openChangePasswordModal();" id="changePasscodeLink" style="color: #fff; font-size: 0.68rem; text-decoration: none; font-family: var(--ff-mono); text-transform: uppercase; letter-spacing: 1px;">🔑 Change Password</a>
     </div>
   </div>
 </div>
@@ -309,25 +372,30 @@
 
 <!-- Admin Change Passcode Overlay -->
 <div class="admin-overlay" id="changePasswordOverlay">
-  <div class="admin-modal" style="max-width: 380px; text-align: center;">
+  <div class="admin-modal" style="max-width: 400px; text-align: center;">
     <button class="admin-modal-close" onclick="closeChangePassword()">&times;</button>
-    <h3>Change <span class="y">Passcode</span></h3>
-    <p style="font-size: 0.8rem; color: var(--muted); margin-bottom: 1.5rem; font-family: var(--ff-mono);">Set a new admin access code</p>
+    <h3 id="changePasswordTitle">Change Admin <span class="y">Password</span></h3>
+    <p style="font-size: 0.8rem; color: var(--muted); margin-bottom: 1.2rem; font-family: var(--ff-mono);" id="changePasswordSub">Set a new passcode or password for admin access</p>
     
     <div class="admin-form-group" style="text-align: left; margin-bottom: 1rem;">
-      <label for="newPasscode" style="display: block; font-family: var(--ff-mono); font-size: 0.60rem; color: var(--y); margin-bottom: 4px; text-transform: uppercase;">New Passcode</label>
-      <input type="password" id="newPasscode" style="width: 100%; padding: 8px; border: 1.5px solid var(--border); background: var(--blk); color: #fff; border-radius: 6px; outline: none; font-family: inherit; box-sizing: border-box;" placeholder="Enter new passcode" maxlength="6">
+      <label for="currentPasscode" style="display: block; font-family: var(--ff-mono); font-size: 0.65rem; color: var(--y); margin-bottom: 4px; text-transform: uppercase;" id="lblCurrentPasscode">Current Password / Passcode</label>
+      <input type="password" id="currentPasscode" style="width: 100%; padding: 8px 12px; border: 1.5px solid var(--border); background: var(--blk); color: #fff; border-radius: 6px; outline: none; font-family: inherit; box-sizing: border-box;" placeholder="Enter current passcode (default 1234)">
+    </div>
+
+    <div class="admin-form-group" style="text-align: left; margin-bottom: 1rem;">
+      <label for="newPasscode" style="display: block; font-family: var(--ff-mono); font-size: 0.65rem; color: var(--y); margin-bottom: 4px; text-transform: uppercase;" id="lblNewPasscode">New Password / Passcode</label>
+      <input type="password" id="newPasscode" style="width: 100%; padding: 8px 12px; border: 1.5px solid var(--border); background: var(--blk); color: #fff; border-radius: 6px; outline: none; font-family: inherit; box-sizing: border-box;" placeholder="Enter new password (PIN or text)">
     </div>
     
-    <div class="admin-form-group" style="text-align: left; margin-bottom: 1rem;">
-      <label for="confirmPasscode" style="display: block; font-family: var(--ff-mono); font-size: 0.60rem; color: var(--y); margin-bottom: 4px; text-transform: uppercase;">Confirm Passcode</label>
-      <input type="password" id="confirmPasscode" style="width: 100%; padding: 8px; border: 1.5px solid var(--border); background: var(--blk); color: #fff; border-radius: 6px; outline: none; font-family: inherit; box-sizing: border-box;" placeholder="Confirm new passcode" maxlength="6">
+    <div class="admin-form-group" style="text-align: left; margin-bottom: 1.2rem;">
+      <label for="confirmPasscode" style="display: block; font-family: var(--ff-mono); font-size: 0.65rem; color: var(--y); margin-bottom: 4px; text-transform: uppercase;" id="lblConfirmPasscode">Confirm New Password</label>
+      <input type="password" id="confirmPasscode" style="width: 100%; padding: 8px 12px; border: 1.5px solid var(--border); background: var(--blk); color: #fff; border-radius: 6px; outline: none; font-family: inherit; box-sizing: border-box;" placeholder="Confirm new password">
     </div>
     
     <div id="changePasswordError" style="color: var(--r); font-family: var(--ff-mono); font-size: 0.75rem; margin-top: -0.5rem; margin-bottom: 1rem; display: none;">Passcodes do not match!</div>
-    <div id="changePasswordSuccess" style="color: #33ff33; font-family: var(--ff-mono); font-size: 0.75rem; margin-top: -0.5rem; margin-bottom: 1rem; display: none;">Passcode updated successfully!</div>
+    <div id="changePasswordSuccess" style="color: #33ff33; font-family: var(--ff-mono); font-size: 0.75rem; margin-top: -0.5rem; margin-bottom: 1rem; display: none;">Password updated successfully!</div>
     
-    <button class="admin-btn admin-btn-primary" style="width: 100%;" onclick="submitChangePassword()">Save Passcode</button>
+    <button class="admin-btn admin-btn-primary" style="width: 100%;" id="btnSavePassword" onclick="submitChangePassword()">Save New Password</button>
   </div>
 </div>
 
@@ -930,15 +998,18 @@ async function submitPasscode() {
   }
 }
 
+const DEFAULT_ADMIN_HASH = '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4'; // SHA-256 for default 1234
+
 function openChangePasswordModal() {
   const overlay = document.getElementById('changePasswordOverlay');
   if (overlay) {
     overlay.classList.add('open');
+    document.getElementById('currentPasscode').value = '';
     document.getElementById('newPasscode').value = '';
     document.getElementById('confirmPasscode').value = '';
     document.getElementById('changePasswordError').style.display = 'none';
     document.getElementById('changePasswordSuccess').style.display = 'none';
-    document.getElementById('newPasscode').focus();
+    document.getElementById('currentPasscode').focus();
   }
 }
 
@@ -948,6 +1019,7 @@ function closeChangePassword() {
 }
 
 async function submitChangePassword() {
+  const currentPass = document.getElementById('currentPasscode').value;
   const newPass = document.getElementById('newPasscode').value;
   const confirmPass = document.getElementById('confirmPasscode').value;
   const errorEl = document.getElementById('changePasswordError');
@@ -956,27 +1028,65 @@ async function submitChangePassword() {
   errorEl.style.display = 'none';
   successEl.style.display = 'none';
   
+  if (!currentPass) {
+    errorEl.textContent = currentLang === 'ar' ? 'يرجى إدخال كلمة المرور الحالية!' : 'Please enter current password!';
+    errorEl.style.display = 'block';
+    return;
+  }
+  
+  const savedHash = localStorage.getItem('chickenji_admin_password_hash') || DEFAULT_ADMIN_HASH;
+  const currentHash = await sha256(currentPass);
+  
+  const isCurrentValid = (currentHash === savedHash) || (currentPass === '1234' && savedHash === DEFAULT_ADMIN_HASH);
+  if (!isCurrentValid) {
+    errorEl.textContent = currentLang === 'ar' ? 'كلمة المرور الحالية غير صحيحة!' : 'Incorrect current password!';
+    errorEl.style.display = 'block';
+    return;
+  }
+  
   if (!newPass) {
-    errorEl.textContent = 'Passcode cannot be empty!';
+    errorEl.textContent = currentLang === 'ar' ? 'كلمة المرور الجديدة لا يمكن أن تكون فارغة!' : 'New password cannot be empty!';
+    errorEl.style.display = 'block';
+    return;
+  }
+  
+  if (newPass.length < 3) {
+    errorEl.textContent = currentLang === 'ar' ? 'يجب أن تتكون كلمة المرور من 3 خانات على الأقل!' : 'Password must be at least 3 characters!';
     errorEl.style.display = 'block';
     return;
   }
   
   if (newPass !== confirmPass) {
-    errorEl.textContent = 'Passcodes do not match!';
+    errorEl.textContent = currentLang === 'ar' ? 'كلمتا المرور الجديدتان غير متطابقتين!' : 'New passwords do not match!';
     errorEl.style.display = 'block';
     return;
   }
   
   try {
-    const hashed = await sha256(newPass);
-    localStorage.setItem('chickenji_admin_password_hash', hashed);
+    const newHash = await sha256(newPass);
+    localStorage.setItem('chickenji_admin_password_hash', newHash);
+    
+    // Mark authenticated
+    isAuthenticated = true;
+    sessionStorage.setItem('chickenji_admin_authed', 'true');
+    
+    successEl.textContent = currentLang === 'ar' ? 'تم تحديث كلمة المرور بنجاح!' : 'Password updated successfully!';
     successEl.style.display = 'block';
+    
+    showAdminToast(currentLang === 'ar' 
+      ? '✅ تم تغيير كلمة المرور بنجاح! اضغط على "📥 حفظ وتحميل HTML" لتثبيتها بشكل دائم على الموقع.' 
+      : '✅ Password changed successfully! Click "📥 Save & Download HTML" to bake it permanently into the website.');
+      
     setTimeout(() => {
       closeChangePassword();
+      if (!isAdminMode) {
+        isAdminMode = true;
+        document.body.classList.add('admin-active');
+        renderMenu();
+      }
     }, 1500);
   } catch (err) {
-    errorEl.textContent = 'Error encrypting passcode!';
+    errorEl.textContent = 'Error saving password: ' + err.message;
     errorEl.style.display = 'block';
   }
 }
@@ -1044,6 +1154,16 @@ document.addEventListener('DOMContentLoaded', () => {
   if (passInput) {
     passInput.addEventListener('keypress', (e) => {
       if (e.key === 'Enter') submitPasscode();
+    });
+  }
+  
+  const curPassInput = document.getElementById('currentPasscode');
+  if (curPassInput) {
+    curPassInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        const next = document.getElementById('newPasscode');
+        if (next) next.focus();
+      }
     });
   }
   
@@ -1308,6 +1428,11 @@ function downloadUpdatedHTML() {
     
     fullHtml = fullHtml.replace(/const\s+initialMenuData\s*=\s*\[[\s\S]*?\];/m, menuCode);
     fullHtml = fullHtml.replace(/const\s+MENU_VERSION\s*=\s*['"][^'"]*['"];/m, `const MENU_VERSION = '${newVersion}';`);
+    // Bake new admin password hash into DEFAULT_ADMIN_HASH if changed
+    const activePassHash = localStorage.getItem('chickenji_admin_password_hash');
+    if (activePassHash) {
+      fullHtml = fullHtml.replace(/const\s+DEFAULT_ADMIN_HASH\s*=\s*['"][^'"]*['"];/m, `const DEFAULT_ADMIN_HASH = '${activePassHash}';`);
+    }
     
     // Clean admin-active and open states
     fullHtml = fullHtml.replace(/\badmin-active\b/g, '');
@@ -1377,7 +1502,7 @@ const translations = {
     aboutBadge: '100% Fresh',
     aboutBadgeSub: 'Every Single Day',
     // Passcode Recovery
-    forgotPasscode: 'Forgot Passcode?',
+    forgotPasscode: 'Forgot Passcode?', changePasswordLink: '🔑 Change Password',
     recoveryTitle: 'Passcode <span class="y">Recovery</span>',
     recoverySub: 'Answer the security question to reset the passcode to default (1234)',
     recoveryQuestionLabel: 'Security Question',
@@ -1421,7 +1546,7 @@ const translations = {
     aboutBadge: '١٠٠٪ طازج',
     aboutBadgeSub: 'كل يوم بلا استثناء',
     // Passcode Recovery
-    forgotPasscode: 'هل نسيت رمز المرور؟',
+    forgotPasscode: 'هل نسيت رمز المرور؟', changePasswordLink: '🔑 تغيير كلمة المرور',
     recoveryTitle: 'استعادة <span class="y">رمز المرور</span>',
     recoverySub: 'أجب عن السؤال الأمني لإعادة تعيين رمز المرور إلى الافتراضي (1234)',
     recoveryQuestionLabel: 'السؤال الأمني',
@@ -1508,6 +1633,7 @@ function applyLang(lang) {
 
   // Passcode Recovery Translations
   setHTML('#forgotPasscodeLink', t.forgotPasscode);
+  setHTML('#changePasscodeLink', t.changePasswordLink);
   setHTML('#recoveryTitle', t.recoveryTitle);
   setHTML('#recoverySub', t.recoverySub);
   setHTML('#recoveryQuestionLabel', t.recoveryQuestionLabel);
@@ -1529,6 +1655,360 @@ function setHTML(sel, html) {
   const el = document.querySelector(sel);
   if (el) el.innerHTML = html;
 }
+
+
+// ── EXCEL SPREADSHEET PRICING MECHANISM ──
+let pendingExcelUpdates = [];
+
+function openAdminExcelModal() {
+  const overlay = document.getElementById('adminExcelOverlay');
+  if (overlay) {
+    overlay.classList.add('open');
+    document.getElementById('excelPreviewContainer').style.display = 'none';
+    document.getElementById('applyExcelBtn').style.display = 'none';
+    document.getElementById('excelFileInput').value = '';
+    pendingExcelUpdates = [];
+  }
+}
+
+function closeAdminExcel() {
+  const overlay = document.getElementById('adminExcelOverlay');
+  if (overlay) overlay.classList.remove('open');
+}
+
+function downloadPricingTemplate() {
+  if (typeof XLSX === 'undefined') {
+    downloadPricingTemplateCSV();
+    return;
+  }
+  
+  const headers = ['ID', 'Category', 'Name (English)', 'Name (Arabic)', 'Price'];
+  const data = [headers];
+  
+  menuItems.forEach(item => {
+    data.push([
+      item.id,
+      item.category,
+      item.nameEn,
+      item.nameAr,
+      item.price
+    ]);
+  });
+  
+  const ws = XLSX.utils.aoa_to_sheet(data);
+  ws['!cols'] = [{ wch: 8 }, { wch: 14 }, { wch: 26 }, { wch: 26 }, { wch: 16 }];
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, 'Menu Pricing');
+  XLSX.writeFile(wb, 'Chickenji_Menu_Pricing.xlsx');
+}
+
+function downloadPricingTemplateCSV() {
+  let csv = 'ID,Category,NameEn,NameAr,Price\n';
+  menuItems.forEach(item => {
+    csv += `"${item.id}","${item.category}","${item.nameEn.replace(/"/g, '""')}","${item.nameAr.replace(/"/g, '""')}","${item.price}"\n`;
+  });
+  const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'Chickenji_Menu_Pricing.csv';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(a.href);
+}
+
+function handleExcelUpload(e) {
+  const file = e.target.files ? e.target.files[0] : (e.dataTransfer ? e.dataTransfer.files[0] : null);
+  if (!file) return;
+  
+  const fileName = file.name.toLowerCase();
+  const label = document.getElementById('excelFileLabel');
+  if (label) label.textContent = file.name;
+  
+  const reader = new FileReader();
+  
+  if (fileName.endsWith('.csv')) {
+    reader.onload = function(evt) {
+      const text = evt.target.result;
+      processCSVText(text);
+    };
+    reader.readAsText(file, 'UTF-8');
+  } else {
+    if (typeof XLSX === 'undefined') {
+      alert(currentLang === 'ar' ? 'مكتبة Excel غير جاهزة، يرجى التحقق من الاتصال أو استخدام ملف CSV.' : 'Excel parser is still loading or unavailable. You can also use CSV.');
+      return;
+    }
+    reader.onload = function(evt) {
+      try {
+        const data = new Uint8Array(evt.target.result);
+        const workbook = XLSX.read(data, { type: 'array' });
+        processExcelWorkbook(workbook);
+      } catch (err) {
+        alert('Error parsing Excel: ' + err.message);
+      }
+    };
+    reader.readAsArrayBuffer(file);
+  }
+}
+
+function processExcelWorkbook(workbook) {
+  const firstSheetName = workbook.SheetNames[0];
+  const sheet = workbook.Sheets[firstSheetName];
+  const rawRows = XLSX.utils.sheet_to_json(sheet, { header: 1, defval: '' });
+  matchAndPreviewRows(rawRows);
+}
+
+function processCSVText(text) {
+  const lines = text.split(/\r?\n/).filter(line => line.trim().length > 0);
+  const rawRows = lines.map(line => {
+    // Simple CSV row parser handling quotes
+    const cells = [];
+    let cur = '', inQuotes = false;
+    for (let i = 0; i < line.length; i++) {
+      const c = line[i];
+      if (c === '"') {
+        if (inQuotes && line[i+1] === '"') { cur += '"'; i++; }
+        else { inQuotes = !inQuotes; }
+      } else if (c === ',' && !inQuotes) {
+        cells.push(cur.trim());
+        cur = '';
+      } else {
+        cur += c;
+      }
+    }
+    cells.push(cur.trim());
+    return cells;
+  });
+  matchAndPreviewRows(rawRows);
+}
+
+function matchAndPreviewRows(rawRows) {
+  pendingExcelUpdates = [];
+  const matchedItemIds = new Set();
+  
+  // Category detection keywords
+  const categoryKeywords = {
+    'بروستد': 'broasted', 'broasted': 'broasted',
+    'وجبات': 'western', 'meals': 'western', 'وجبة': 'western', 'meal': 'western',
+    'سندويش': 'sandwiches', 'ساندويش': 'sandwiches', 'sandwich': 'sandwiches',
+    'بووم': 'boom', 'بوووم': 'boom', 'boom': 'boom',
+    'بطاطا': 'sides', 'باستا': 'sides', 'سلطات': 'sides', 'مقبلات': 'sides', 'sides': 'sides'
+  };
+  
+  // Check if there is an explicit header row (e.g. ID, Price)
+  let idCol = -1, priceCol = -1, nameCol = -1;
+  if (rawRows.length > 0) {
+    const h0 = rawRows[0].map(c => String(c).toLowerCase().trim());
+    idCol = h0.findIndex(c => c === 'id' || c === 'رمز' || c === 'كود');
+    priceCol = h0.findIndex(c => c.includes('price') || c.includes('سعر') || c.includes('السعر'));
+    nameCol = h0.findIndex(c => c.includes('name') || c.includes('اسم') || c.includes('صنف') || c.includes('item'));
+  }
+  
+  let currentCategory = null;
+  
+  for (let rIdx = 0; rIdx < rawRows.length; rIdx++) {
+    const row = rawRows[rIdx];
+    if (!row || row.length === 0) continue;
+    
+    // Skip table header row if detected
+    if (rIdx === 0 && (idCol !== -1 || priceCol !== -1)) continue;
+    
+    const rowStr = row.map(c => String(c).trim()).join(' ');
+    if (!rowStr) continue;
+    
+    const c0 = String(row[0] || '').trim().toLowerCase();
+    
+    // Check if section header (e.g. بروستد, وجبات غربي, etc.)
+    const hasDigits = row.some(c => /\d{3,}/.test(String(c)));
+    if (!hasDigits || row.filter(c => String(c).trim().length > 0).length === 1) {
+      for (const [kw, cat] of Object.entries(categoryKeywords)) {
+        if (c0.includes(kw)) {
+          currentCategory = cat;
+          break;
+        }
+      }
+      if (!hasDigits) continue;
+    }
+    
+    // Extract price number from row
+    let priceVal = null;
+    if (priceCol !== -1 && row[priceCol]) {
+      const digits = String(row[priceCol]).replace(/[^0-9]/g, '');
+      if (digits && parseInt(digits, 10) >= 1000) {
+        priceVal = parseInt(digits, 10).toLocaleString('en-US') + ' S.P.';
+      }
+    } else {
+      for (let c = row.length - 1; c >= 0; c--) {
+        const digits = String(row[c]).replace(/[^0-9]/g, '');
+        if (digits && parseInt(digits, 10) >= 1000) {
+          priceVal = parseInt(digits, 10).toLocaleString('en-US') + ' S.P.';
+          break;
+        }
+      }
+    }
+    
+    if (!priceVal) continue;
+    
+    let matchedItem = null;
+    
+    // 1. Match by explicit ID column
+    if (idCol !== -1 && row[idCol]) {
+      const explicitId = String(row[idCol]).trim().toLowerCase();
+      matchedItem = menuItems.find(it => it.id.toLowerCase() === explicitId);
+    }
+    
+    // 2. Match by Section + Name
+    if (!matchedItem) {
+      const candidates = currentCategory 
+        ? menuItems.filter(it => it.category === currentCategory)
+        : menuItems;
+        
+      const cellText = String(nameCol !== -1 && row[nameCol] ? row[nameCol] : row[0]).trim().toLowerCase();
+      const labelEn = cellText.split(':')[0].split('|')[0].trim();
+      
+      // 2a. Exact English match
+      for (const it of candidates) {
+        if (labelEn === it.nameEn.toLowerCase()) {
+          matchedItem = it;
+          break;
+        }
+      }
+      
+      // 2b. Prefix English match (longest candidate nameEn first)
+      if (!matchedItem) {
+        const sorted = [...candidates].sort((a, b) => b.nameEn.length - a.nameEn.length);
+        for (const it of sorted) {
+          const ne = it.nameEn.toLowerCase();
+          if (labelEn.startsWith(ne) || ne.startsWith(labelEn)) {
+            matchedItem = it;
+            break;
+          }
+        }
+      }
+      
+      // 2c. Arabic Keyword match
+      if (!matchedItem) {
+        for (const it of candidates) {
+          if (it.id === 'sd3' && (cellText.includes('موزريلا') || cellText.includes('mozzarella'))) { matchedItem = it; break; }
+          if (it.id === 'sd4' && (cellText.includes('سلطة') || cellText.includes('سلطات') || cellText.includes('سيزر') || cellText.includes('كولسلو'))) { matchedItem = it; break; }
+          if (it.id === 'sd2' && (cellText.includes('بطاطا') || cellText.includes('potato'))) { matchedItem = it; break; }
+          if (it.id === 'sd1' && (cellText.includes('باستا') || cellText.includes('pasta'))) { matchedItem = it; break; }
+          
+          const tokens = ['دبابيس', 'بوفلو', 'بوفالو', 'نصف', 'فروج', 'كرانشي تشيكنجي', 'كرانشي تشكن', 'كرانشي', 'زنجر', 'كريسبي', 'اسكالوب', 'إسكالوب', 'فاهيتا', 'مكسيكانو', 'شيش', 'ماريا', 'بوب كورن'];
+          for (const token of tokens) {
+            if (it.nameAr.includes(token) && cellText.includes(token)) {
+              matchedItem = it;
+              break;
+            }
+          }
+          if (matchedItem) break;
+        }
+      }
+    }
+    
+    if (matchedItem && !matchedItemIds.has(matchedItem.id)) {
+      matchedItemIds.add(matchedItem.id);
+      pendingExcelUpdates.push({
+        item: matchedItem,
+        oldPrice: matchedItem.price,
+        newPrice: priceVal,
+        changed: matchedItem.price !== priceVal
+      });
+    }
+  }
+  
+  renderExcelPreview();
+}
+
+function renderExcelPreview() {
+  const container = document.getElementById('excelPreviewContainer');
+  const tbody = document.getElementById('excelPreviewTableBody');
+  const matchCountEl = document.getElementById('excelMatchCount');
+  const changedCountEl = document.getElementById('excelChangedCount');
+  const applyBtn = document.getElementById('applyExcelBtn');
+  
+  if (!container || !tbody) return;
+  
+  tbody.innerHTML = '';
+  
+  const changedCount = pendingExcelUpdates.filter(u => u.changed).length;
+  if (matchCountEl) matchCountEl.textContent = pendingExcelUpdates.length;
+  if (changedCountEl) changedCountEl.textContent = changedCount;
+  
+  if (pendingExcelUpdates.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: var(--r); padding: 1.5rem;">
+      No matching menu items found in this spreadsheet. Check column names or use the Download Template button.
+    </td></tr>`;
+    if (applyBtn) applyBtn.style.display = 'none';
+  } else {
+    pendingExcelUpdates.forEach(u => {
+      const tr = document.createElement('tr');
+      const badgeHTML = u.changed 
+        ? `<span class="badge-status badge-changed">Updated</span>` 
+        : `<span class="badge-status badge-same">No change</span>`;
+        
+      const newPriceStyle = u.changed ? 'color: #33ff33; font-weight: 700;' : 'color: var(--muted);';
+      
+      tr.innerHTML = `
+        <td><strong>${u.item.nameEn}</strong><br><small style="color: var(--muted);">${u.item.nameAr}</small></td>
+        <td><span style="font-family: var(--ff-mono); font-size: 0.68rem; text-transform: uppercase;">${u.item.category}</span></td>
+        <td style="font-family: var(--ff-mono);">${u.oldPrice}</td>
+        <td style="font-family: var(--ff-mono); ${newPriceStyle}">${u.newPrice}</td>
+        <td>${badgeHTML}</td>
+      `;
+      tbody.appendChild(tr);
+    });
+    if (applyBtn) {
+      applyBtn.style.display = 'inline-block';
+      applyBtn.textContent = `Apply New Prices (${changedCount} updates)`;
+    }
+  }
+  
+  container.style.display = 'block';
+}
+
+function applyExcelPrices() {
+  if (pendingExcelUpdates.length === 0) return;
+  
+  let changeCount = 0;
+  pendingExcelUpdates.forEach(u => {
+    const target = menuItems.find(it => it.id === u.item.id);
+    if (target && target.price !== u.newPrice) {
+      target.price = u.newPrice;
+      changeCount++;
+    }
+  });
+  
+  const updatedVersion = 'custom_excel_' + Date.now();
+  localStorage.setItem('chickenji_menu', JSON.stringify(menuItems));
+  localStorage.setItem('chickenji_menu_version', updatedVersion);
+  
+  closeAdminExcel();
+  renderMenu();
+  
+  showAdminToast(currentLang === 'ar' 
+    ? `✅ تم تحديث ${changeCount} أسعار من ملف الإكسل! اضغط على "📥 حفظ وتحميل HTML" لتطبيقها على الموقع بشكل دائم.` 
+    : `✅ Applied ${changeCount} price updates from Excel! Click "📥 Save & Download HTML" to publish changes permanently.`);
+}
+
+// Drag & drop handlers
+document.addEventListener('DOMContentLoaded', () => {
+  const dropZone = document.getElementById('excelDropZone');
+  if (dropZone) {
+    dropZone.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      dropZone.classList.add('dragover');
+    });
+    dropZone.addEventListener('dragleave', () => {
+      dropZone.classList.remove('dragover');
+    });
+    dropZone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      dropZone.classList.remove('dragover');
+      handleExcelUpload(e);
+    });
+  }
+});
 
 // Render dynamic menu items on load
 applyLang(currentLang);

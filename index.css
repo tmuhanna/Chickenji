@@ -1501,3 +1501,71 @@ body.admin-active .mcard-edit-btn:hover {
     text-align: center;
   }
 }
+
+
+/* Excel Upload Modal & Preview */
+.excel-dropzone {
+  border: 2px dashed rgba(242, 186, 27, 0.45);
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+  padding: 1.5rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+.excel-dropzone:hover, .excel-dropzone.dragover {
+  border-color: var(--y);
+  background: rgba(242, 186, 27, 0.08);
+  transform: translateY(-2px);
+}
+.excel-preview-scroll {
+  max-height: 260px;
+  overflow-y: auto;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: #141416;
+}
+.excel-preview-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.75rem;
+  font-family: var(--ff-body);
+}
+.excel-preview-table th {
+  background: #1f1f23;
+  color: var(--y);
+  font-family: var(--ff-mono);
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 8px 10px;
+  position: sticky;
+  top: 0;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+.excel-preview-table td {
+  padding: 8px 10px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  color: #ddd;
+}
+.excel-preview-table tr:hover td {
+  background: rgba(255,255,255,0.03);
+}
+.badge-status {
+  display: inline-block;
+  padding: 2px 7px;
+  border-radius: 4px;
+  font-size: 0.65rem;
+  font-family: var(--ff-mono);
+  font-weight: 700;
+}
+.badge-changed {
+  background: rgba(51, 255, 51, 0.15);
+  color: #33ff33;
+  border: 1px solid rgba(51, 255, 51, 0.3);
+}
+.badge-same {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--muted);
+}
